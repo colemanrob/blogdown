@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Open data | </title>
+    <link>/tag/open-data/</link>
+      <atom:link href="/tag/open-data/index.xml" rel="self" type="application/rss+xml" />
+    <description>Open data</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2017 - 2020 Rob Coleman</copyright><lastBuildDate>Sun, 03 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png</url>
+      <title>Open data</title>
+      <link>/tag/open-data/</link>
+    </image>
+    
+    <item>
+      <title>Analyzing Commuting Patterns in Ontario</title>
+      <link>/code/analyzing-commuting-patterns-in-ontario/</link>
+      <pubDate>Sun, 03 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>/code/analyzing-commuting-patterns-in-ontario/</guid>
+      <description>&lt;p&gt;I was inspired by 
+&lt;a href=&#34;http://varianceexplained.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;David Robinson&lt;/a&gt;&amp;lsquo;s latest webcast in which he made a heatmap of French train delays using &lt;code&gt;geom_tile&lt;/code&gt; and wanted to try it out for myself.&lt;/p&gt;
+&lt;center&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;In this week&amp;#39;s &lt;a href=&#34;https://twitter.com/hashtag/tidytuesday?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#tidytuesday&lt;/a&gt; screencast, I analyze delays in French train stations 🇫🇷🚄&lt;br&gt;&lt;br&gt;I show how to create heatmaps of delays (inspired by &lt;a href=&#34;https://twitter.com/noccaea?ref_src=twsrc%5Etfw&#34;&gt;@noccaea&lt;/a&gt;!), and embarrass myself with even the simplest French pronunciations&lt;a href=&#34;https://t.co/zBrkIkdcCz&#34;&gt;https://t.co/zBrkIkdcCz&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rstats&lt;/a&gt; &lt;a href=&#34;https://t.co/RI7ZpxV89X&#34;&gt;pic.twitter.com/RI7ZpxV89X&lt;/a&gt;&lt;/p&gt;&amp;mdash; David Robinson (@drob) &lt;a href=&#34;https://twitter.com/drob/status/1100456189752688640?ref_src=twsrc%5Etfw&#34;&gt;February 26, 2019&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;/center&gt;
+&lt;p&gt;I don&amp;rsquo;t have a lot of opportunities to use heatmaps, but recently Statcan has released their 
+&lt;a href=&#34;https://www12.statcan.gc.ca/census-recensement/2016/rt-td/jtw-ddt-eng.cfm&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Journey to Work&lt;/a&gt; data as part of the 2016 Census.  I wanted to see if I could use a heatmap to understand the commuting patterns in communities in southern Ontario.&lt;/p&gt;
+&lt;h3 id=&#34;load-packages&#34;&gt;Load packages&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(tidyverse)
+library(cancensus)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I downloaded the 
+&lt;a href=&#34;https://www12.statcan.gc.ca/census-recensement/2016/dp-pd/dt-td/Rp-eng.cfm?LANG=E&amp;amp;APATH=3&amp;amp;DETAIL=0&amp;amp;DIM=0&amp;amp;FL=A&amp;amp;FREE=0&amp;amp;GC=0&amp;amp;GID=0&amp;amp;GK=0&amp;amp;GRP=1&amp;amp;PID=113344&amp;amp;PRID=10&amp;amp;PTYPE=109445&amp;amp;S=0&amp;amp;SHOWALL=0&amp;amp;SUB=0&amp;amp;Temporal=2017&amp;amp;THEME=125&amp;amp;VID=0&amp;amp;VNAMEE=&amp;amp;VNAMEF=&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;commuting table&lt;/a&gt; from statscan because I couldn&amp;rsquo;t find it using the &lt;code&gt;cancensus&lt;/code&gt; package.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;raw_commute &amp;lt;- read_csv(&amp;quot;~/projects/R stuff/commute/98-400-X2016391_English_CSV_data.csv&amp;quot;) %&amp;gt;% 
+    janitor::clean_names() %&amp;gt;% 
+    select(code = geo_code_por,
+           live = geo_name,
+           work = geo_name_1,
+           total = dim_sex_3_member_id_1_total_sex)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# filter only those whose code starts w/ 35 (Ontario)
+ontario_commute &amp;lt;- raw_commute %&amp;gt;% 
+    filter(str_detect(code, pattern = &amp;quot;^35&amp;quot;)) 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;download-geography-data&#34;&gt;Download geography data&lt;/h3&gt;
+&lt;p&gt;I was able to retrieve the working age population and census division geographies using &lt;code&gt;cancensus&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(cancensus)
+library(sf)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Linking to GEOS 3.7.0, GDAL 2.3.2, PROJ 5.2.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# create list of ontario census divisions to pass to cancensus
+regions_list_ontario &amp;lt;- list_census_regions(&amp;quot;CA16&amp;quot;) %&amp;gt;% 
+  filter(str_detect(region, pattern = &amp;quot;^35&amp;quot;))  %&amp;gt;% 
+  as_census_region_list
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Querying CensusMapper API for regions data...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;pop_data &amp;lt;- get_census(&amp;quot;CA16&amp;quot;,
+                           regions = regions_list_ontario,
+                           vectors = &amp;quot;v_CA16_61&amp;quot;,
+                           level = &amp;quot;CD&amp;quot;,
+                       geo_format = &amp;quot;sf&amp;quot;, labels = &amp;quot;short&amp;quot;) %&amp;gt;% 
+  janitor::clean_names()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# clean
+pop_data %&amp;gt;% 
+  mutate(working_age = v_ca16_61) %&amp;gt;% 
+  mutate(code = as.double(geo_uid)) %&amp;gt;% 
+  select(code, working_age, shape_area, geometry) -&amp;gt; pop_data_clean
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;joining-the-tables-together&#34;&gt;Joining the tables together&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# remove commuting within cd, compute totals
+ontario_commute %&amp;gt;% 
+  filter(live != work) %&amp;gt;%
+  group_by(live) %&amp;gt;% 
+  mutate(total_commuters = sum(total),
+         prop_commuters = total / total_commuters ) %&amp;gt;% 
+  ungroup() %&amp;gt;% 
+  left_join(pop_data_clean, by = &amp;quot;code&amp;quot;) %&amp;gt;% 
+  group_by(work) %&amp;gt;% 
+  mutate(total_commuters_destination = sum(total)) %&amp;gt;% 
+  mutate(live_prop = total_commuters / working_age,
+         work_prop = total / working_age ) %&amp;gt;% 
+  ungroup() -&amp;gt; ontario_commute_clean
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;create-visualizations&#34;&gt;Create visualizations&lt;/h3&gt;
+&lt;p&gt;Let&amp;rsquo;s see what visualizations will work.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ontario_commute_clean %&amp;gt;% 
+    filter(total &amp;gt;= 3000) %&amp;gt;% 
+    mutate(live = str_wrap(live, width = 15)) %&amp;gt;% 
+    mutate(live = fct_reorder(live, total)) %&amp;gt;% 
+    mutate(work = fct_reorder(work, total)) %&amp;gt;% 
+    ggplot(aes(live, work, fill = total)) +
+    geom_tile(alpha = 0.7) +
+    theme_light() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    scale_fill_viridis_c(labels = scales::comma_format()) +
+    labs(fill = &amp;quot;# of commuters&amp;quot;,
+         title = &amp;quot;The largest number of commuters in Ontario are those who live in York, Peel and Durham who commute to Toronto for work&amp;quot;,
+         subtitle = &amp;quot;Number of employed labour force aged 15+ who commute by Census Division - Minimum 3,000 commuters to be represented&amp;quot;,
+         x = &amp;quot;Live - Census Division&amp;quot;,
+         y = &amp;quot;Work - Census Division&amp;quot;,
+         caption = &amp;quot;Data from Statistics Canada 2016 Canadian Census - Journey to Work \n https://www12.statcan.gc.ca/census-recensement/2016/rt-td/jtw-ddt-eng.cfm&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/img/commute.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;map-the-proportions&#34;&gt;Map the proportions&lt;/h3&gt;
+&lt;p&gt;I&amp;rsquo;m always trying to improve my mapping skills and &lt;code&gt;geom_sf&lt;/code&gt; makes it a lot easier.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ontario_commute_clean %&amp;gt;% 
+  filter((!live %in% c(&amp;quot;Rainy River&amp;quot;, &amp;quot;Kenora&amp;quot;, &amp;quot;Thunder Bay&amp;quot;, &amp;quot;Algoma&amp;quot;, &amp;quot;Nipissing&amp;quot;, 
+                       &amp;quot;Cochrane&amp;quot;, &amp;quot;Greater Sudbury / Grand Sudbury&amp;quot;, &amp;quot;Manitoulin&amp;quot;,
+                       &amp;quot;Timiskaming&amp;quot;, &amp;quot;Sudbury&amp;quot;, &amp;quot;Parry Sound&amp;quot;))) %&amp;gt;% 
+  ggplot() +
+  geom_sf(aes(fill = live_prop)) +
+  scale_fill_viridis_c(&amp;quot;% Labour force who commute to work&amp;quot;, labels = scales::percent) + theme_minimal() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank()) + 
+  coord_sf(datum=NA) +
+  labs(title = &amp;quot;The % of the labour force (aged 15+) who commute by Census Division in Southern Ontario&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/img/map.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Scraping Restaurant Inspection Reports</title>
+      <link>/code/scraping-restaurant-inspection-reports/</link>
+      <pubDate>Tue, 05 Dec 2017 00:00:00 +0000</pubDate>
+      <guid>/code/scraping-restaurant-inspection-reports/</guid>
+      <description>&lt;p&gt;
+&lt;a href=&#34;http://www.algomapublichealth.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Algoma Public Health&lt;/a&gt; is the public health agency in my area that inspects restaurants to ensure they are abiding by all the relevant food safety legislation. They are also nice enough to publish their 
+&lt;a href=&#34;http://www.algomapublichealth.com/inspections-environment/food-safety/restaurant-inspection-reports/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;restaurant health inspection reports&lt;/a&gt; online for anyone to review.&lt;/p&gt;
+&lt;p&gt;I searched for a few restaurants that I frequent (phew 
+&lt;a href=&#34;https://goo.gl/maps/rqj5goqwqeT2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Fratellis&lt;/a&gt; is safe!) but then I wanted to know &lt;strong&gt;which restaurants had the most health infractions?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Their website isn&amp;rsquo;t setup to answer that kind of question. Each inspection report is published as a unique page on their website which makes aggregating and comparing difficult.&lt;/p&gt;
+&lt;p&gt;I used &lt;code&gt;rvest&lt;/code&gt; to scrape the URLs of all the reports APH published. Then I scraped the contents of the reports so that I could create a dataset that would allow me to aggregate and compare the results (the dataset and code 
+&lt;a href=&#34;https://github.com/colemanrob/restoscrape/tree/master/data&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;available here&lt;/a&gt;.)&lt;/p&gt;
+&lt;h2 id=&#34;restaurants-with-the-most-infractions&#34;&gt;Restaurants with the most infractions&lt;/h2&gt;
+&lt;p&gt;Of the 90% of restaurants who received three visits, here are the top 5 in terms of total number of infractions:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/resto1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Surprising results. Upper Deck has some 
+&lt;a href=&#34;http://www.algomapublichealth.com/inspections-environment/food-safety/restaurant-inspection-reports/?id=7e880c25-6cd5-4e01-bcf4-7ad707ae166f&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;particularly bad&lt;/a&gt; health infractions.&lt;/p&gt;
+&lt;p&gt;But that got me thinking&amp;ndash;not all infractions are equal. Some are minor and are corrected onsite. Some are more serious and others still are downright strange. Let&amp;rsquo;s take a closer look.&lt;/p&gt;
+&lt;h2 id=&#34;number-of-infractions&#34;&gt;Number of infractions&lt;/h2&gt;
+&lt;p&gt;Here are the top 10 infractions by frequency, meaning these infractions appear most often in the dataset.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/resto2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;stranger-infractions&#34;&gt;Stranger Infractions&lt;/h2&gt;
+&lt;p&gt;The infractions that don&amp;rsquo;t appear frequently are also quite interesting. Here are infractions that only appear once in the dataset, but leave me with more questions than answers.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;Restaurant&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Address&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Date&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Infraction&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Juicy Beatz &amp;amp; Healthy Eatz&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;235 McNabb Street&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2017-08-23&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Food handler hygiene&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Pauline&amp;rsquo;s Place&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;923 Queen Street&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2017-11-28&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Only Grade A or B eggs permitted&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Queen West Variety&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;602 Queen Street&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2016-12-16&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Exclusion of live animals on the premises, subject to exemptions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Roberta Bondar Pavilion Serving Kitchens&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;65 Foster Dr&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2016-08-30&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;No room with food used for sleeping purposes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Teen Challenge Kitchen&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;1446 Great Northern Road&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2016-12-13&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Uninspected meats obtained through hunting: only for custom cutting, wash/rinse/sanitize equipment after use as prescribed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Questions that come to mind:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;who&amp;rsquo;s sleeping in the Pavilion?&lt;/li&gt;
+&lt;li&gt;did the Teen Challenge involve catching your meal?&lt;/li&gt;
+&lt;li&gt;what kind of animals are hanging out in Queen West Variety?&lt;/li&gt;
+&lt;li&gt;how does one tell the grade of eggs? Can you do it just by looking?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;What does this data tell us? Not too much really :)&lt;/p&gt;
+&lt;p&gt;I hope you enjoyed this peek behind the health inspection curtain. The dataset and code are 
+&lt;a href=&#34;https://github.com/colemanrob/restoscrape/tree/master/data&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;available here&lt;/a&gt;. If you have any questions or comments, please feel free to 
+&lt;a href=&#34;https://twitter.com/coleman&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;get in touch&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

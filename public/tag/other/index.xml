@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Other | </title>
+    <link>/tag/other/</link>
+      <atom:link href="/tag/other/index.xml" rel="self" type="application/rss+xml" />
+    <description>Other</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2017 - 2020 Rob Coleman</copyright><lastBuildDate>Sat, 05 Oct 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png</url>
+      <title>Other</title>
+      <link>/tag/other/</link>
+    </image>
+    
+    <item>
+      <title>Notes on fuzzy matching</title>
+      <link>/code/notes-on-fuzzy-matching/</link>
+      <pubDate>Sat, 05 Oct 2019 00:00:00 +0000</pubDate>
+      <guid>/code/notes-on-fuzzy-matching/</guid>
+      <description>&lt;p&gt;Recently had the pleasure of fuzzy matching two datasets that included first and last name and date of birth.  Here are some notes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://github.com/dgrtwo/fuzzyjoin&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;fuzzyjoin package&lt;/a&gt; - great functions that do most of the heavy lifting&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;http://finzi.psych.upenn.edu/library/stringdist/html/stringdist-metrics.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;string metrics&lt;/a&gt; - there are a lot of ways to measure the difference in strings, selecting a metric depends on the problem&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;toy-example&#34;&gt;Toy Example&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(tidyverse)
+library(fuzzyjoin)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Create our list of names and dobs.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;inside_list &amp;lt;- tribble(
+  ~first, ~last, ~dob,
+  &amp;quot;frank&amp;quot;, &amp;quot;johnson&amp;quot;, &amp;quot;1980-01-01&amp;quot;,
+  &amp;quot;debbie&amp;quot;, &amp;quot;willis&amp;quot;, &amp;quot;1982-01-01&amp;quot;
+) %&amp;gt;% mutate(dob = parse_date(dob, format = &amp;quot;%Y-%m-%d&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Create a second list to be matched against&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;outside_list &amp;lt;- tribble(
+  ~first, ~last, ~dob,
+  &amp;quot;frank&amp;quot;, &amp;quot;johnson&amp;quot;, &amp;quot;1980-01-01&amp;quot;,
+  &amp;quot;debrah&amp;quot;, &amp;quot;willis&amp;quot;, &amp;quot;1982-01-02&amp;quot;
+) %&amp;gt;% mutate(dob = parse_date(dob, format = &amp;quot;%Y-%m-%d&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Use the function of your choice.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;stringdist_join(outside_list, inside_list,
+                by = c(&amp;quot;first&amp;quot;, &amp;quot;last&amp;quot;, &amp;quot;dob&amp;quot;),
+                ignore_case = TRUE,
+                distance_col = &amp;quot;dist&amp;quot;,
+                mode = &amp;quot;left&amp;quot;,
+                method = &amp;quot;lv&amp;quot;,
+                max_dist = 20) %&amp;gt;% 
+  mutate(total_distance = dob.dist + first.dist + last.dist) %&amp;gt;% 
+  select(-ends_with(&amp;quot;.dist&amp;quot;)) %&amp;gt;% 
+  knitr::kable()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;first.x&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;last.x&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;dob.x&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;first.y&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;last.y&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;dob.y&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;dist&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;total_distance&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;frank&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;johnson&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;1980-01-01&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;frank&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;johnson&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;1980-01-01&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;frank&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;johnson&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;1980-01-01&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;debbie&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;willis&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;1982-01-01&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;14&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;debrah&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;willis&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;1982-01-02&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;frank&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;johnson&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;1980-01-01&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;14&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;debrah&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;willis&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;1982-01-02&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;debbie&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;willis&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;1982-01-01&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;You can see the difference between &lt;em&gt;debrah&lt;/em&gt; and &lt;em&gt;debbie&lt;/em&gt; is 4.&lt;/p&gt;
+&lt;p&gt;Setting the distance threshold is often a function of how exact you want the matches to be.&lt;/p&gt;
+&lt;p&gt;See the 
+&lt;a href=&#34;http://varianceexplained.org/fuzzyjoin/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;fuzzyjoin&lt;/a&gt; reference for more.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
