@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="Learn how to use Academic&#39;s docs layout for publishing online courses, software documentation, and tutorials.">
+  <meta name="description" content="Chapter 2 &amp; 3 Bayesian Inference  small world (the model) vs large world (reality) - goal of science is to help us move between bayesian inference is counting and comparing possibilities, the garden of forking data globe tossing example.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/courses/example/">
+  <link rel="alternate" hreflang="en-us" href="/code/statistical-rethinking-week-2/">
 
   
 
@@ -250,14 +250,12 @@
   
 
   
-  <link rel="alternate" href="/courses/example/index.xml" type="application/rss+xml" title="">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/courses/example/">
+  <link rel="canonical" href="/code/statistical-rethinking-week-2/">
 
   
   
@@ -276,17 +274,22 @@
   <meta property="twitter:creator" content="@coleman">
   
   <meta property="og:site_name" content="">
-  <meta property="og:url" content="/courses/example/">
-  <meta property="og:title" content="Overview | ">
-  <meta property="og:description" content="Learn how to use Academic&#39;s docs layout for publishing online courses, software documentation, and tutorials."><meta property="og:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/code/statistical-rethinking-week-2/">
+  <meta property="og:title" content="Statistical Rethinking Week 2 | ">
+  <meta property="og:description" content="Chapter 2 &amp; 3 Bayesian Inference  small world (the model) vs large world (reality) - goal of science is to help us move between bayesian inference is counting and comparing possibilities, the garden of forking data globe tossing example."><meta property="og:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    <meta property="og:updated_time" content="2018-09-09T00:00:00&#43;00:00">
+    
+      <meta property="article:published_time" content="2020-05-18T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-05-18T11:32:45-04:00">
   
 
   
 
 
+
+  
 
 
   
@@ -328,7 +331,7 @@
 
 
 
-  <title>Overview | </title>
+  <title>Statistical Rethinking Week 2 | </title>
 
 </head>
 
@@ -489,6 +492,28 @@
         
         
           
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/courses/"><span>Courses</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
             
           
         
@@ -530,144 +555,224 @@
 </nav>
 
 
+  <article class="article">
+
   
 
-<div class="container-fluid docs">
-  <div class="row flex-xl-nowrap">
-    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
-      
 
 
 
 
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Statistical Rethinking Week 2</h1>
+
+  
 
   
     
-  
 
 
-
-
-<form class="docs-search d-flex align-items-center">
-  <button class="btn docs-toggle d-md-none p-0 mr-3" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
-    <span><i class="fas fa-bars"></i></span>
-  </button>
-
-  
-  <input name="q" type="search" class="form-control" placeholder="Search..." autocomplete="off">
-  
-</form>
-
-<nav class="collapse docs-links" id="docs-nav">
-  
+<div class="article-metadata">
 
   
   
-  
-  
-  <div class="docs-toc-item active">
-    <a class="docs-toc-link" href="/courses/example/">Overview</a>
 
-  </div>
   
-  <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/courses/example/example1/">Example Topic</a>
-    <ul class="nav docs-sidenav">
+  <span class="article-date">
+    
+    
       
-      <li >
-        <a href="/courses/example/example1/">Tips 1-2</a>
-      </li>
+          Last updated on
       
-      <li >
-        <a href="/courses/example/example2/">Tips 3-4</a>
-      </li>
-      
-    </ul>
+    
+    May 18, 2020
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
     
 
-  </div>
-  
-  
-</nav>
-
-    </div>
-
-    
-    <div class="d-none d-xl-block col-xl-2 docs-toc">
-      <ul class="nav toc-top">
-        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
-      </ul>
-
-      <nav id="TableOfContents">
-  <ul>
-    <li><a href="#flexibility">Flexibility</a></li>
-    <li><a href="#delete-tutorials">Delete tutorials</a></li>
-    <li><a href="#update-site-menu">Update site menu</a></li>
-    <li><a href="#update-the-docs-menu">Update the docs menu</a></li>
-  </ul>
-</nav>
-
-      
-    </div>
-    
-
-    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
-
-      <article class="article">
-
-        <div class="docs-article-container">
-          <h1>Overview</h1>
-
-          <div class="article-style">
-            <h2 id="flexibility">Flexibility</h2>
-<p>This feature can be used for publishing content such as:</p>
-<ul>
-<li><strong>Online courses</strong></li>
-<li><strong>Project or software documentation</strong></li>
-<li><strong>Tutorials</strong></li>
-</ul>
-<p>The <code>courses</code> folder may be renamed. For example, we can rename it to <code>docs</code> for software/project documentation or <code>tutorials</code> for creating an online course.</p>
-<h2 id="delete-tutorials">Delete tutorials</h2>
-<p><strong>To remove these pages, delete the <code>courses</code> folder and see below to delete the associated menu link.</strong></p>
-<h2 id="update-site-menu">Update site menu</h2>
-<p>After renaming or deleting the <code>courses</code> folder, you may wish to update any <code>[[main]]</code> menu links to it by editing your menu configuration at <code>config/_default/menus.toml</code>.</p>
-<p>For example, if you delete this folder, you can remove the following from your menu configuration:</p>
-<pre><code class="language-toml">[[main]]
-  name = &quot;Courses&quot;
-  url = &quot;courses/&quot;
-  weight = 50
-</code></pre>
-<p>Or, if you are creating a software documentation site, you can rename the <code>courses</code> folder to <code>docs</code> and update the associated <em>Courses</em> menu configuration to:</p>
-<pre><code class="language-toml">[[main]]
-  name = &quot;Docs&quot;
-  url = &quot;docs/&quot;
-  weight = 50
-</code></pre>
-<h2 id="update-the-docs-menu">Update the docs menu</h2>
-<p>If you use the <em>docs</em> layout, note that the name of the menu in the front matter should be in the form <code>[menu.X]</code> where <code>X</code> is the folder name. Hence, if you rename the <code>courses/example/</code> folder, you should also rename the menu definitions in the front matter of files within <code>courses/example/</code> from <code>[menu.example]</code> to <code>[menu.&lt;NewFolderName&gt;]</code>.</p>
-
-          </div>
-
-          
 
 
 
-          
-          <div class="article-widget">
-            
-<div class="post-nav">
-  
+
+
+
+
+
+
+
+
+
+
   
 </div>
 
-          </div>
-          
-        </div>
 
-        <div class="body-footer">
-          <p>Last updated on Sep 9, 2018</p>
 
-          
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<div id="chapter-2-3-bayesian-inference" class="section level3">
+<h3>Chapter 2 &amp; 3 Bayesian Inference</h3>
+<ul>
+<li><em>small</em> world (the model) vs <em>large</em> world (reality) - goal of science is to help us move between</li>
+<li>bayesian inference is counting and comparing possibilities, the garden of forking data</li>
+<li>globe tossing example. Variables:
+<ul>
+<li>9 tosses - n = 9</li>
+<li>W water x 6</li>
+<li>L land x 3</li>
+<li><em>p</em> proportion of globe covered by water - parameters (unobserved variables)</li>
+</ul></li>
+</ul>
+<p>
+<p><strong>Likelihood</strong></p>
+<ul>
+<li>the number of ways the data are possible after eliminating the ways that are inconsistent with out data (i.e. counting the garden)</li>
+</ul>
+<p>The relative number of ways of getting 6 water, holding <em>p</em> at 0.5, and <em>N = L+W</em> at 9.</p>
+<pre class="r"><code>dbinom(6, size = 9, prob = 0.5)</code></pre>
+<pre><code>## [1] 0.1640625</code></pre>
+<p><strong>Prior</strong></p>
+<p><em>p</em> (the probability of sampling water) is the <em>parameter</em> of the model. For every parameter in your model you must provide a distribution of <em>prior plausibility</em>. Where do priors come from? Engineering choice, domain knowledge etc.</p>
+<p><strong>Posterior</strong></p>
+<p>Update the prior given the data - for every unique combination of data, likelihood, parameters and prior there is a unique <em>posterior distribution</em> – {{&lt; hl &gt;}} the relative plausibility of different parameter values conditional on the data {{&lt; /hl &gt;}} .</p>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/bayes/">Bayes</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/code/statistical-rethinking-week-2/&amp;text=Statistical%20Rethinking%20Week%202" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/code/statistical-rethinking-week-2/&amp;t=Statistical%20Rethinking%20Week%202" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Statistical%20Rethinking%20Week%202&amp;body=/code/statistical-rethinking-week-2/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/code/statistical-rethinking-week-2/&amp;title=Statistical%20Rethinking%20Week%202" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Statistical%20Rethinking%20Week%202%20/code/statistical-rethinking-week-2/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/code/statistical-rethinking-week-2/&amp;title=Statistical%20Rethinking%20Week%202" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
 
 
 
@@ -676,22 +781,230 @@
   
   
 
-<p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/courses/example/_index.md">
-    <i class="fas fa-pen pr-2"></i>Edit this page
-  </a>
-</p>
 
 
 
 
-          
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/rob-coleman/avatar_hud63453db3407bbe7a80777eafcdc04a3_129303_270x270_fill_q90_lanczos_center.jpg" alt="Rob Coleman">
+      
 
+      <div class="media-body">
+        <h5 class="card-title"><a href="/">Rob Coleman</a></h5>
+        <h6 class="card-subtitle">open data | rstats | coffee</h6>
+        <p class="card-text">I write about how to solve problems using <a href="https://www.r-project.org/">r</a>, an open-source programming language for data science.  Also interested in <a href="https://en.wikipedia.org/wiki/Active_labour_market_policies">active labour market</a> policy, <a href="https://en.wikipedia.org/wiki/Search_theory">search theory</a>, and jobs data.</p>
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/coleman" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/colemanrob" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:coleman.rob&#43;nospam@gmail.com" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/code/statistical-thinking-week-2/">Statistical Thinking Week 2</a></li>
+      
+      <li><a href="/code/statistical-rethinking-week-1/">Statistical Rethinking Week 1</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
         </div>
+      </div>
+      </div>
+    </script>
+    
 
-      </article>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
 
-      <footer class="site-footer">
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
   
   <p class="powered-by">
     
@@ -756,132 +1069,18 @@
     <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
 
     
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
   </p>
 </footer>
 
-
-    </main>
   </div>
-</div>
-
-
-      
-
-    
-    
-    
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
-
-      
-
-      
-        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
-        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
-        
-      
-
-    
-
-    
-    
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
-    
-
-    
-    
-    <script>const code_highlighting = true;</script>
-    
-
-    
-    
-    <script>const isSiteThemeDark = false;</script>
-    
-
-    
-    
-    
-    
-    
-    
-    <script>
-      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
-      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
-      const content_type = {
-        'post': "Posts",
-        'project': "Projects",
-        'publication' : "Publications",
-        'talk' : "Talks"
-        };
-    </script>
-    
-
-    
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.1/anchor.min.js" integrity="sha256-pB/deHc9CGfFpJRjC43imB29Rse8tak+5eXqntO94ck=" crossorigin="anonymous"></script>
-    <script>
-      anchors.add();
-    </script>
-    
-
-    
-    
-    <script id="search-hit-fuse-template" type="text/x-template">
-      <div class="search-hit" id="summary-{{key}}">
-      <div class="search-hit-content">
-        <div class="search-hit-name">
-          <a href="{{relpermalink}}">{{title}}</a>
-          <div class="article-metadata search-hit-type">{{type}}</div>
-          <p class="search-hit-description">{{snippet}}</p>
-        </div>
-      </div>
-      </div>
-    </script>
-    
-
-    
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
-    
-
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-      
-    
-    
-    
-    
-    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
-
-    
-
-
-
-
-
-
-  
   
 
   

@@ -24,6 +24,11 @@
   weight = 30
 
 [[main]]
+  name = "Courses"
+  url = "courses/"
+  weight = 40
+
+[[main]]
   name = "Books"
   url = "https://www.goodreads.com/user/show/8183339-rob"
   weight = 50
@@ -34,10 +39,7 @@
 #   url = "#featured"
 #   weight = 40
 
-#[[main]]
-#  name = "Courses"
-#  url = "courses/"
-#  weight = 50
+
 
 # [[main]]
 #   name = "Contact"

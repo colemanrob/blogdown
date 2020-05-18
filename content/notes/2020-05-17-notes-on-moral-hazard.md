@@ -90,4 +90,5 @@ F Vandenbroucke, C Luigjes, 2016
 * outcomes are based on location, stream and expediency (how fast) clients move to outcomes.
 
 
+
 {{< figure library="true" src="AUSmodel.png" title="" lightbox="false" >}}

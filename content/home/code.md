@@ -34,6 +34,10 @@ subtitle = ""
     tag = "Tidyverse"
     
   [[content.filter_button]]
+    name = "Bayes"
+    tag = "Bayes"
+    
+  [[content.filter_button]]
     name = "Other"
     tag = "Other"
 

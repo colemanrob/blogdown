@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bayes | </title>
+    <link>/tag/bayes/</link>
+      <atom:link href="/tag/bayes/index.xml" rel="self" type="application/rss+xml" />
+    <description>Bayes</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2017 - 2020 Rob Coleman</copyright><lastBuildDate>Mon, 18 May 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png</url>
+      <title>Bayes</title>
+      <link>/tag/bayes/</link>
+    </image>
+    
+    <item>
+      <title>Statistical Rethinking Week 2</title>
+      <link>/code/statistical-rethinking-week-2/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      <guid>/code/statistical-rethinking-week-2/</guid>
+      <description>
+
+
+&lt;div id=&#34;chapter-2-3-bayesian-inference&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Chapter 2 &amp;amp; 3 Bayesian Inference&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;small&lt;/em&gt; world (the model) vs &lt;em&gt;large&lt;/em&gt; world (reality) - goal of science is to help us move between&lt;/li&gt;
+&lt;li&gt;bayesian inference is counting and comparing possibilities, the garden of forking data&lt;/li&gt;
+&lt;li&gt;globe tossing example. Variables:
+&lt;ul&gt;
+&lt;li&gt;9 tosses - n = 9&lt;/li&gt;
+&lt;li&gt;W water x 6&lt;/li&gt;
+&lt;li&gt;L land x 3&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;p&lt;/em&gt; proportion of globe covered by water - parameters (unobserved variables)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+&lt;p&gt;&lt;strong&gt;Likelihood&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the number of ways the data are possible after eliminating the ways that are inconsistent with out data (i.e. counting the garden)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The relative number of ways of getting 6 water, holding &lt;em&gt;p&lt;/em&gt; at 0.5, and &lt;em&gt;N = L+W&lt;/em&gt; at 9.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dbinom(6, size = 9, prob = 0.5)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.1640625&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Prior&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;p&lt;/em&gt; (the probability of sampling water) is the &lt;em&gt;parameter&lt;/em&gt; of the model. For every parameter in your model you must provide a distribution of &lt;em&gt;prior plausibility&lt;/em&gt;. Where do priors come from? Engineering choice, domain knowledge etc.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Posterior&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Update the prior given the data - for every unique combination of data, likelihood, parameters and prior there is a unique &lt;em&gt;posterior distribution&lt;/em&gt; – {{&amp;lt; hl &amp;gt;}} the relative plausibility of different parameter values conditional on the data {{&amp;lt; /hl &amp;gt;}} .&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Statistical Thinking Week 2</title>
+      <link>/code/statistical-thinking-week-2/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      <guid>/code/statistical-thinking-week-2/</guid>
+      <description>&lt;h3 id=&#34;chapter-2--3-bayesian-inference&#34;&gt;Chapter 2 &amp;amp; 3 Bayesian Inference&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;small&lt;/em&gt; world (the model) vs &lt;em&gt;large&lt;/em&gt; world (reality) - goal of science is to help us move between&lt;/li&gt;
+&lt;li&gt;bayesian inference is counting and comparing possibilities, the garden of forking data&lt;/li&gt;
+&lt;li&gt;globe tossing example.  Variables:
+&lt;ul&gt;
+&lt;li&gt;9 tosses - n = 9&lt;/li&gt;
+&lt;li&gt;W water x 6&lt;/li&gt;
+&lt;li&gt;L land x 3&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;p&lt;/em&gt; proportion of globe covered by water - parameters (unobserved variables)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+&lt;p&gt;&lt;strong&gt;Likelihood&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the number of ways the data are possible after eliminating the ways that are inconsistent with out data (i.e. counting the garden)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The relative number of ways of getting 6 water, holding &lt;em&gt;p&lt;/em&gt; at 0.5, and &lt;em&gt;N = L+W&lt;/em&gt; at 9.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;dbinom(6, size = 9, prob = 0.5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.1640625
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Prior&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;p&lt;/em&gt; (the probability of sampling water) is the &lt;em&gt;parameter&lt;/em&gt; of the model.  For every parameter in your model you must provide a distribution of &lt;em&gt;prior plausibility&lt;/em&gt;.  Where do priors come from?  Engineering choice, domain knowledge etc.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Posterior&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Update the prior given the data - for every unique combination of data, likelihood, parameters and prior there is a unique &lt;em&gt;posterior distribution&lt;/em&gt; &amp;ndash; &lt;span class=&#34;markup-quote&#34;&gt;the relative plausibility of different parameter values conditional on the data&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Bayesian Updating&lt;/p&gt;
+&lt;p&gt;3 different conditioning engines or techniques for computing posterior distributions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;grid approximation&lt;/li&gt;
+&lt;li&gt;quadratic approximation&lt;/li&gt;
+&lt;li&gt;markov chain monte carlo (MCMC)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Grid Approximation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Constrain the possible parameter values to only a finite grid of values.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# define grid
+p_grid &amp;lt;- seq(from = 0, to = 1, length.out = 20)
+
+# define prior
+
+prior &amp;lt;- rep(1, 20)
+
+# compute likelihood at each value in grid
+
+likelihood &amp;lt;- dbinom(6, size = 9, prob = p_grid)
+
+# compute the product of likelihood and prior
+
+unstd_posterior &amp;lt;- likelihood * prior
+
+# standardize the posterior so it sums to 1
+
+posterior &amp;lt;- unstd_posterior / sum(unstd_posterior)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;plot the results&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot(p_grid, posterior, type = &amp;quot;b&amp;quot;,
+     xlab = &amp;quot;probability of water&amp;quot;, ylab = &amp;quot;posterior probability&amp;quot;)
+mtext(&amp;quot;20 points&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/code/2020-05-18-statistical-thinking-week-2_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Quadratic Approximation&lt;/strong&gt;
+Find the peak/curve of the distribution&lt;/p&gt;
+&lt;p&gt;use the &lt;code&gt;quap&lt;/code&gt; function from the rethinking package&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(rethinking)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: rstan
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: StanHeaders
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## rstan (Version 2.19.3, GitRev: 2e1f913d3ca3)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## For execution on a local, multicore CPU with excess RAM we recommend calling
+## options(mc.cores = parallel::detectCores()).
+## To avoid recompilation of unchanged Stan programs, we recommend calling
+## rstan_options(auto_write = TRUE)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: parallel
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: dagitty
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## rethinking (Version 2.01)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &#39;rethinking&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &#39;package:stats&#39;:
+## 
+##     rstudent
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# specify
+globe_qa &amp;lt;- quap(
+  alist(
+    W ~ dbinom(W+L, p), #binomial likelihood
+    p ~ dunif(0,1) # uniform prior
+  ),
+  data = list(W=6, L=3)
+)
+
+# display the summary
+
+precis(globe_qa)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##        mean        sd      5.5%     94.5%
+## p 0.6666664 0.1571338 0.4155362 0.9177966
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;MCMC&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Instead of computing or approximating the posterior distribution, MCMC draws samples from the posterior - you end up with samples whose frequencies correspond to posterior plausibilities.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;n_samples &amp;lt;- 1000
+
+p &amp;lt;- rep(NA, n_samples)
+
+p[1] &amp;lt;- 0.5
+
+W &amp;lt;- 6
+L &amp;lt;- 3
+
+for (i in 2:n_samples) {
+  p_new &amp;lt;- rnorm(1, p[i-1], 0.1)
+  if (p_new &amp;lt; 0 ) p_new &amp;lt;- abs(p_new)
+  if (p_new &amp;gt; 1 ) p_new &amp;lt;- 2 - p_new
+  q0 &amp;lt;- dbinom(W, W+L, p[i-1])
+  q1 &amp;lt;- dbinom(W, W+L, p_new)
+  p[i] &amp;lt;- ifelse(runif(1) &amp;lt; q1/q0, p_new, p[i-1])
+}
+
+dens(p, xlim=c(0,1))
+
+curve(dbeta(x, W+1, L+1), lty = 2, add=TRUE)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/code/2020-05-18-statistical-thinking-week-2_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Statistical Rethinking Week 1</title>
+      <link>/code/statistical-rethinking-week-1/</link>
+      <pubDate>Sun, 17 May 2020 00:00:00 +0000</pubDate>
+      <guid>/code/statistical-rethinking-week-1/</guid>
+      <description>
+
+
+&lt;div id=&#34;chapter-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Chapter 1&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;McElreath offers good insights on the philosophy of science and calls for &lt;em&gt;statistical rethinking&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;statistical models are like the golum of prague, unthinking instruction followers.
+&lt;ul&gt;
+&lt;li&gt;bad/poor instructions will destroy Prague&lt;/li&gt;
+&lt;li&gt;bad/poor models will compute but not tell us anything
+&lt;p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;instead we need a broader toolkit to build models and understand the causes:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;p&gt;Bayesian data analysis – counting the number of ways the data could have happened given our assumptions&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Model comparison – using cross-validation and information criteria to compare models predictions&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Multi-level models – accounting for unmeasured aspects of individuals, groups, or populations.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Graphical causal models – designing models for the purposes of &lt;em&gt;identifying&lt;/em&gt; causes&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

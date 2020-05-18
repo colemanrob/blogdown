@@ -40,6 +40,6 @@ user_groups:
 
 ---
 
-I write about how to solve problems using [r](https://www.r-project.org/), an open-source programming language for data science.  Also interested in [active labour market](https://en.wikipedia.org/wiki/Active_labour_market_policies), [search theory](https://en.wikipedia.org/wiki/Search_theory), and jobs data. 
+I write about how to solve problems using [r](https://www.r-project.org/), an open-source programming language for data science.  Also interested in [active labour market](https://en.wikipedia.org/wiki/Active_labour_market_policies) policy, [search theory](https://en.wikipedia.org/wiki/Search_theory), and jobs data. 
 
 I write notes to learn out loud, keep a second searchable brain, and improve my thinking/writing. :books: :coffee: :bike: :computer:
