@@ -6,7 +6,7 @@ menu:
   example:
     parent: Overview
     weight: 1
-title: Chapter 1
+title: Chapter 2
 toc: true
 type: docs
 weight: 1
@@ -99,55 +99,7 @@ use the `quap` function from the rethinking package
 
 ```r
 library(rethinking)
-```
 
-```
-## Loading required package: rstan
-```
-
-```
-## Loading required package: StanHeaders
-```
-
-```
-## Loading required package: ggplot2
-```
-
-```
-## rstan (Version 2.19.3, GitRev: 2e1f913d3ca3)
-```
-
-```
-## For execution on a local, multicore CPU with excess RAM we recommend calling
-## options(mc.cores = parallel::detectCores()).
-## To avoid recompilation of unchanged Stan programs, we recommend calling
-## rstan_options(auto_write = TRUE)
-```
-
-```
-## Loading required package: parallel
-```
-
-```
-## Loading required package: dagitty
-```
-
-```
-## rethinking (Version 2.01)
-```
-
-```
-## 
-## Attaching package: 'rethinking'
-```
-
-```
-## The following object is masked from 'package:stats':
-## 
-##     rstudent
-```
-
-```r
 # specify
 globe_qa <- quap(
   alist(
@@ -163,8 +115,8 @@ precis(globe_qa)
 ```
 
 ```
-##        mean        sd      5.5%     94.5%
-## p 0.6666665 0.1571338 0.4155363 0.9177967
+##        mean        sd     5.5%     94.5%
+## p 0.6666895 0.1571284 0.415568 0.9178111
 ```
 
 ## MCMC

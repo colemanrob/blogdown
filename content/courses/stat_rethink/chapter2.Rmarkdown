@@ -6,7 +6,7 @@ menu:
   example:
     parent: Overview
     weight: 1
-title: Chapter 1
+title: Chapter 2
 toc: true
 type: docs
 weight: 1
@@ -88,7 +88,7 @@ Find the peak/curve of the distribution
 
 use the `quap` function from the rethinking package
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(rethinking)
 
 # specify

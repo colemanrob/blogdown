@@ -43,7 +43,7 @@
     </item>
     
     <item>
-      <title>Chapter 1</title>
+      <title>Chapter 2</title>
       <link>/courses/stat_rethink/chapter2/</link>
       <pubDate>Sun, 05 May 2019 00:00:00 +0100</pubDate>
       <guid>/courses/stat_rethink/chapter2/</guid>
@@ -112,34 +112,8 @@ mtext(&amp;quot;20 points&amp;quot;)
 &lt;p&gt;Find the peak/curve of the distribution&lt;/p&gt;
 &lt;p&gt;use the &lt;code&gt;quap&lt;/code&gt; function from the rethinking package&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(rethinking)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: rstan
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: StanHeaders
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## rstan (Version 2.19.3, GitRev: 2e1f913d3ca3)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## For execution on a local, multicore CPU with excess RAM we recommend calling
-## options(mc.cores = parallel::detectCores()).
-## To avoid recompilation of unchanged Stan programs, we recommend calling
-## rstan_options(auto_write = TRUE)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: parallel
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: dagitty
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## rethinking (Version 2.01)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Attaching package: &#39;rethinking&#39;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following object is masked from &#39;package:stats&#39;:
-## 
-##     rstudent
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# specify
+
+# specify
 globe_qa &amp;lt;- quap(
   alist(
     W ~ dbinom(W+L, p), #binomial likelihood
@@ -152,8 +126,8 @@ globe_qa &amp;lt;- quap(
 
 precis(globe_qa)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##        mean        sd      5.5%     94.5%
-## p 0.6666665 0.1571338 0.4155363 0.9177967
+&lt;pre&gt;&lt;code&gt;##        mean        sd     5.5%     94.5%
+## p 0.6666895 0.1571284 0.415568 0.9178111
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;mcmc&#34;&gt;MCMC&lt;/h2&gt;
 &lt;p&gt;Instead of computing or approximating the posterior distribution, MCMC draws samples from the posterior - you end up with samples whose frequencies correspond to posterior plausibilities.&lt;/p&gt;
@@ -180,6 +154,15 @@ dens(p, xlim=c(0,1))
 curve(dbeta(x, W+1, L+1), lty = 2, add=TRUE)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/courses/stat_rethink/chapter2_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Chapter 3</title>
+      <link>/courses/stat_rethink/chapter3/</link>
+      <pubDate>Sun, 05 May 2019 00:00:00 +0100</pubDate>
+      <guid>/courses/stat_rethink/chapter3/</guid>
+      <description>&lt;p&gt;test&lt;/p&gt;
 </description>
     </item>
     

@@ -275,7 +275,7 @@
   
   <meta property="og:site_name" content="">
   <meta property="og:url" content="/courses/stat_rethink/chapter2/">
-  <meta property="og:title" content="Chapter 1 | ">
+  <meta property="og:title" content="Chapter 2 | ">
   <meta property="og:description" content="Building up Bayesian Inference  small world (the model) vs large world (reality) - goal of science is to help us move between bayesian inference is counting and comparing possibilities, the garden of forking data globe tossing example."><meta property="og:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
@@ -331,7 +331,7 @@
 
 
 
-  <title>Chapter 1 | </title>
+  <title>Chapter 2 | </title>
 
 </head>
 
@@ -602,6 +602,10 @@
         <a href="/courses/stat_rethink/chapter2/">Chapter 2</a>
       </li>
       
+      <li >
+        <a href="/courses/stat_rethink/chapter3/">Chapter 3</a>
+      </li>
+      
     </ul>
     
 
@@ -639,7 +643,7 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Chapter 1</h1>
+          <h1>Chapter 2</h1>
 
           <div class="article-style">
             <h2 id="building-up-bayesian-inference">Building up Bayesian Inference</h2>
@@ -707,34 +711,8 @@ mtext(&quot;20 points&quot;)
 <p>Find the peak/curve of the distribution</p>
 <p>use the <code>quap</code> function from the rethinking package</p>
 <pre><code class="language-r">library(rethinking)
-</code></pre>
-<pre><code>## Loading required package: rstan
-</code></pre>
-<pre><code>## Loading required package: StanHeaders
-</code></pre>
-<pre><code>## Loading required package: ggplot2
-</code></pre>
-<pre><code>## rstan (Version 2.19.3, GitRev: 2e1f913d3ca3)
-</code></pre>
-<pre><code>## For execution on a local, multicore CPU with excess RAM we recommend calling
-## options(mc.cores = parallel::detectCores()).
-## To avoid recompilation of unchanged Stan programs, we recommend calling
-## rstan_options(auto_write = TRUE)
-</code></pre>
-<pre><code>## Loading required package: parallel
-</code></pre>
-<pre><code>## Loading required package: dagitty
-</code></pre>
-<pre><code>## rethinking (Version 2.01)
-</code></pre>
-<pre><code>## 
-## Attaching package: 'rethinking'
-</code></pre>
-<pre><code>## The following object is masked from 'package:stats':
-## 
-##     rstudent
-</code></pre>
-<pre><code class="language-r"># specify
+
+# specify
 globe_qa &lt;- quap(
   alist(
     W ~ dbinom(W+L, p), #binomial likelihood
@@ -747,8 +725,8 @@ globe_qa &lt;- quap(
 
 precis(globe_qa)
 </code></pre>
-<pre><code>##        mean        sd      5.5%     94.5%
-## p 0.6666665 0.1571338 0.4155363 0.9177967
+<pre><code>##        mean        sd     5.5%     94.5%
+## p 0.6666895 0.1571284 0.415568 0.9178111
 </code></pre>
 <h2 id="mcmc">MCMC</h2>
 <p>Instead of computing or approximating the posterior distribution, MCMC draws samples from the posterior - you end up with samples whose frequencies correspond to posterior plausibilities.</p>
@@ -794,6 +772,12 @@ curve(dbeta(x, W+1, L+1), lty = 2, add=TRUE)
     <a href="/courses/stat_rethink/chapter1/" rel="next">Chapter 1</a>
   </div>
   
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/courses/stat_rethink/chapter3/" rel="prev">Chapter 3</a>
+  </div>
   
 </div>
 
