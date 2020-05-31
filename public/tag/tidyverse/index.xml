@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tidyverse | </title>
+    <link>/tag/tidyverse/</link>
+      <atom:link href="/tag/tidyverse/index.xml" rel="self" type="application/rss+xml" />
+    <description>Tidyverse</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2017 - 2020 Rob Coleman</copyright><lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png</url>
+      <title>Tidyverse</title>
+      <link>/tag/tidyverse/</link>
+    </image>
+    
+    <item>
+      <title>Type Convert</title>
+      <link>/code/type-convert/</link>
+      <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
+      <guid>/code/type-convert/</guid>
+      <description>&lt;p&gt;Never noticed &lt;code&gt;type_convert&lt;/code&gt; from &lt;code&gt;readr&lt;/code&gt; that lets you wrangle data and then convert as appropriate.  Let&amp;rsquo;s give it a spin.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(tidyverse)
+
+typical_data &amp;lt;- tribble(~bad_col,
+                        &amp;quot;3_apple&amp;quot;,
+                        &amp;quot;4_banana&amp;quot;)
+
+typical_data %&amp;gt;% 
+  separate(bad_col, into = c(&amp;quot;n&amp;quot;, &amp;quot;fruit&amp;quot;), sep = &amp;quot;_&amp;quot;) %&amp;gt;% 
+  type_convert()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 2 x 2
+##       n fruit 
+##   &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; 
+## 1     3 apple 
+## 2     4 banana
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Perfect!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

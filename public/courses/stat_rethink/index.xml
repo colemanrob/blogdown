@@ -126,8 +126,8 @@ globe_qa &amp;lt;- quap(
 
 precis(globe_qa)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##        mean        sd     5.5%     94.5%
-## p 0.6666895 0.1571284 0.415568 0.9178111
+&lt;pre&gt;&lt;code&gt;##        mean        sd      5.5%     94.5%
+## p 0.6666665 0.1571338 0.4155363 0.9177967
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;mcmc&#34;&gt;MCMC&lt;/h2&gt;
 &lt;p&gt;Instead of computing or approximating the posterior distribution, MCMC draws samples from the posterior - you end up with samples whose frequencies correspond to posterior plausibilities.&lt;/p&gt;
@@ -162,7 +162,65 @@ curve(dbeta(x, W+1, L+1), lty = 2, add=TRUE)
       <link>/courses/stat_rethink/chapter3/</link>
       <pubDate>Sun, 05 May 2019 00:00:00 +0100</pubDate>
       <guid>/courses/stat_rethink/chapter3/</guid>
-      <description>&lt;p&gt;test&lt;/p&gt;
+      <description>&lt;h2 id=&#34;sampling-from-the-imaginary&#34;&gt;Sampling from the imaginary&lt;/h2&gt;
+&lt;p&gt;Now let&amp;rsquo;s sample from the posterior&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p_grid &amp;lt;- seq( from=0, to=1, length.out = 1000)
+
+prob_p &amp;lt;- rep(1, 1000)
+
+prob_data &amp;lt;- dbinom(6, size=9, prob= p_grid)
+
+posterior &amp;lt;- prob_data * prob_p
+
+
+posterior &amp;lt;- posterior / sum(posterior)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;samples &amp;lt;- sample(p_grid, prob = posterior, size=1e4, replace = TRUE)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot(samples)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/courses/stat_rethink/chapter3_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(rethinking)
+
+dens(samples)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/courses/stat_rethink/chapter3_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;intervals-of-defined-boundaries&#34;&gt;Intervals of defined boundaries&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# add up posterior prob where p &amp;lt; 0.5
+
+sum(posterior[p_grid &amp;lt; 0.5])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.1718746
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;quantile(samples, 0.8)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##       80% 
+## 0.7607608
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;quantile(samples, c(0.1, 0.9))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##       10%       90% 
+## 0.4473473 0.8128128
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;PI(samples, prob = 0.5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##       25%       75% 
+## 0.5415415 0.7387387
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;sampling-to-simulate-prediction&#34;&gt;Sampling to simulate prediction&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;dbinom(0:2, size=2, prob=0.7)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.09 0.42 0.49
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;rbinom(10, size = 2, prob = 0.7)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] 2 1 2 2 2 1 0 2 2 2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;dummy_w &amp;lt;- rbinom(1e5, size = 9, prob = 0.7)
+
+simplehist(dummy_w, xlab=&amp;quot;dummy water count&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/courses/stat_rethink/chapter3_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 </description>
     </item>
     

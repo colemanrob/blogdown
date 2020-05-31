@@ -10,6 +10,7 @@ title: Chapter 1
 toc: true
 type: docs
 weight: 1
+editable: false
 ---
 
 ## Philosophy of Science

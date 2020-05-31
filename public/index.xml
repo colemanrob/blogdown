@@ -5,7 +5,7 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description></description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2017 - 2020 Rob Coleman</copyright><lastBuildDate>Thu, 28 Jun 2018 00:00:00 +0100</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2017 - 2020 Rob Coleman</copyright>
     <image>
       <url>/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png</url>
       <title></title>
@@ -126,8 +126,8 @@ globe_qa &amp;lt;- quap(
 
 precis(globe_qa)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##        mean        sd     5.5%     94.5%
-## p 0.6666895 0.1571284 0.415568 0.9178111
+&lt;pre&gt;&lt;code&gt;##        mean        sd      5.5%     94.5%
+## p 0.6666665 0.1571338 0.4155363 0.9177967
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;mcmc&#34;&gt;MCMC&lt;/h2&gt;
 &lt;p&gt;Instead of computing or approximating the posterior distribution, MCMC draws samples from the posterior - you end up with samples whose frequencies correspond to posterior plausibilities.&lt;/p&gt;
@@ -162,7 +162,65 @@ curve(dbeta(x, W+1, L+1), lty = 2, add=TRUE)
       <link>/courses/stat_rethink/chapter3/</link>
       <pubDate>Sun, 05 May 2019 00:00:00 +0100</pubDate>
       <guid>/courses/stat_rethink/chapter3/</guid>
-      <description>&lt;p&gt;test&lt;/p&gt;
+      <description>&lt;h2 id=&#34;sampling-from-the-imaginary&#34;&gt;Sampling from the imaginary&lt;/h2&gt;
+&lt;p&gt;Now let&amp;rsquo;s sample from the posterior&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p_grid &amp;lt;- seq( from=0, to=1, length.out = 1000)
+
+prob_p &amp;lt;- rep(1, 1000)
+
+prob_data &amp;lt;- dbinom(6, size=9, prob= p_grid)
+
+posterior &amp;lt;- prob_data * prob_p
+
+
+posterior &amp;lt;- posterior / sum(posterior)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;samples &amp;lt;- sample(p_grid, prob = posterior, size=1e4, replace = TRUE)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot(samples)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/courses/stat_rethink/chapter3_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(rethinking)
+
+dens(samples)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/courses/stat_rethink/chapter3_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;intervals-of-defined-boundaries&#34;&gt;Intervals of defined boundaries&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# add up posterior prob where p &amp;lt; 0.5
+
+sum(posterior[p_grid &amp;lt; 0.5])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.1718746
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;quantile(samples, 0.8)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##       80% 
+## 0.7607608
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;quantile(samples, c(0.1, 0.9))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##       10%       90% 
+## 0.4473473 0.8128128
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;PI(samples, prob = 0.5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##       25%       75% 
+## 0.5415415 0.7387387
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;sampling-to-simulate-prediction&#34;&gt;Sampling to simulate prediction&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;dbinom(0:2, size=2, prob=0.7)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.09 0.42 0.49
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;rbinom(10, size = 2, prob = 0.7)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] 2 1 2 2 2 1 0 2 2 2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;dummy_w &amp;lt;- rbinom(1e5, size = 9, prob = 0.7)
+
+simplehist(dummy_w, xlab=&amp;quot;dummy water count&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/courses/stat_rethink/chapter3_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 </description>
     </item>
     
@@ -185,6 +243,32 @@ curve(dbeta(x, W+1, L+1), lty = 2, add=TRUE)
 &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;shortcodes&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Further talk details can easily be added to this page using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Type Convert</title>
+      <link>/code/type-convert/</link>
+      <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
+      <guid>/code/type-convert/</guid>
+      <description>&lt;p&gt;Never noticed &lt;code&gt;type_convert&lt;/code&gt; from &lt;code&gt;readr&lt;/code&gt; that lets you wrangle data and then convert as appropriate.  Let&amp;rsquo;s give it a spin.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(tidyverse)
+
+typical_data &amp;lt;- tribble(~bad_col,
+                        &amp;quot;3_apple&amp;quot;,
+                        &amp;quot;4_banana&amp;quot;)
+
+typical_data %&amp;gt;% 
+  separate(bad_col, into = c(&amp;quot;n&amp;quot;, &amp;quot;fruit&amp;quot;), sep = &amp;quot;_&amp;quot;) %&amp;gt;% 
+  type_convert()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 2 x 2
+##       n fruit 
+##   &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; 
+## 1     3 apple 
+## 2     4 banana
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Perfect!&lt;/p&gt;
 </description>
     </item>
     
@@ -1136,24 +1220,6 @@ Three
 &lt;/ul&gt;
 &lt;h2 id=&#34;figures&#34;&gt;Figures&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;/img/screenshot.png&#34; alt=&#34;enter image description here&#34;&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Privacy Policy</title>
-      <link>/privacy/</link>
-      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
-      <guid>/privacy/</guid>
-      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Terms</title>
-      <link>/terms/</link>
-      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
-      <guid>/terms/</guid>
-      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
 </description>
     </item>
     

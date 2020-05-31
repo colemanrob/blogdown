@@ -38,7 +38,7 @@
   
   
   
-  <meta name="theme-color" content="#4caf50">
+  <meta name="theme-color" content="#00a5e0">
   
 
   
@@ -281,7 +281,7 @@
   <meta property="og:description" content="open data | rstats | coffee"><meta property="og:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    <meta property="og:updated_time" content="2019-10-05T00:00:00&#43;00:00">
+    <meta property="og:updated_time" content="2020-05-31T00:00:00&#43;00:00">
   
 
   
@@ -302,12 +302,12 @@
     window.cookieconsent.initialise({
       "palette": {
         "popup": {
-          "background": "#4caf50",
+          "background": "#00a5e0",
           "text": "#fff"
         },
         "button": {
           "background": "#fff",
-          "text": "#4caf50"
+          "text": "#00a5e0"
         }
       },
       "theme": "classic",
@@ -315,7 +315,7 @@
         "message": "This website uses cookies to ensure you get the best experience on our website.",
         "dismiss": "Got it!",
         "link": "Learn more",
-        "href": "/privacy/"
+        "href": "https://www.cookiesandyou.com"
       }
     })});
   </script>
@@ -591,6 +591,19 @@
     
     
     <div>
+      <h2><a href="/code/type-convert/" >Type Convert</a></h2>
+      <div class="article-style">
+        
+          Never noticed type_convert from readr that lets you wrangle data and then convert as appropriate. Let&rsquo;s give it a spin.
+library(tidyverse) typical_data &lt;- tribble(~bad_col, &quot;3_apple&quot;, &quot;4_banana&quot;) typical_data %&gt;% separate(bad_col, into = c(&quot;n&quot;, &quot;fruit&quot;), sep = &quot;_&quot;) %&gt;% type_convert()  ## # A tibble: 2 x 2 ## n fruit ## &lt;dbl&gt; &lt;chr&gt; ## 1 3 apple ## 2 4 banana  Perfect!
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
       <h2><a href="/code/notes-on-fuzzy-matching/" >Notes on fuzzy matching</a></h2>
       <div class="article-style">
         
@@ -745,16 +758,6 @@
   
   <div class="container">
     <footer class="site-footer">
-  
-  <p class="powered-by">
-    
-      <a href="/privacy/">Privacy Policy</a>
-    
-    
-       &middot; 
-      <a href="/terms/">Terms</a>
-    
-  </p>
   
 
   <p class="powered-by">

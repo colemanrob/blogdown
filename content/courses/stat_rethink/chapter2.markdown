@@ -10,6 +10,7 @@ title: Chapter 2
 toc: true
 type: docs
 weight: 1
+editable: false
 ---
 ## Building up Bayesian Inference
 
@@ -115,8 +116,8 @@ precis(globe_qa)
 ```
 
 ```
-##        mean        sd     5.5%     94.5%
-## p 0.6666895 0.1571284 0.415568 0.9178111
+##        mean        sd      5.5%     94.5%
+## p 0.6666665 0.1571338 0.4155363 0.9177967
 ```
 
 ## MCMC

@@ -32,11 +32,7 @@ subtitle = ""
   [[content.filter_button]]
     name = "Tidyverse"
     tag = "Tidyverse"
-    
-  [[content.filter_button]]
-    name = "Bayes"
-    tag = "Bayes"
-    
+
   [[content.filter_button]]
     name = "Other"
     tag = "Other"
@@ -50,7 +46,7 @@ subtitle = ""
   #   2 = Compact
   #   3 = Card
   #   5 = Showcase
-  view = 1
+  view = 2
 
   # For Showcase view, flip alternate rows?
   flip_alt_rows = false

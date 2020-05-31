@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="&hellip;">
+  <meta name="description" content="open data | rstats | coffee">
 
   
-  <link rel="alternate" hreflang="en-us" href="/terms/">
+  <link rel="alternate" hreflang="en-us" href="/tag/tidyverse/">
 
   
 
@@ -38,7 +38,7 @@
   
   
   
-  <meta name="theme-color" content="#4caf50">
+  <meta name="theme-color" content="#00a5e0">
   
 
   
@@ -250,12 +250,14 @@
   
 
   
+  <link rel="alternate" href="/tag/tidyverse/index.xml" type="application/rss+xml" title="">
+  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/terms/">
+  <link rel="canonical" href="/tag/tidyverse/">
 
   
   
@@ -274,22 +276,17 @@
   <meta property="twitter:creator" content="@coleman">
   
   <meta property="og:site_name" content="">
-  <meta property="og:url" content="/terms/">
-  <meta property="og:title" content="Terms | ">
-  <meta property="og:description" content="&hellip;"><meta property="og:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/tag/tidyverse/">
+  <meta property="og:title" content="Tidyverse | ">
+  <meta property="og:description" content="open data | rstats | coffee"><meta property="og:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    
-      <meta property="article:published_time" content="2018-06-28T00:00:00&#43;01:00">
-    
-    <meta property="article:modified_time" content="2018-06-28T00:00:00&#43;01:00">
+    <meta property="og:updated_time" content="2020-05-31T00:00:00&#43;00:00">
   
 
   
 
 
-
-  
 
 
   
@@ -305,12 +302,12 @@
     window.cookieconsent.initialise({
       "palette": {
         "popup": {
-          "background": "#4caf50",
+          "background": "#00a5e0",
           "text": "#fff"
         },
         "button": {
           "background": "#fff",
-          "text": "#4caf50"
+          "text": "#00a5e0"
         }
       },
       "theme": "classic",
@@ -318,7 +315,7 @@
         "message": "This website uses cookies to ensure you get the best experience on our website.",
         "dismiss": "Got it!",
         "link": "Learn more",
-        "href": "/privacy/"
+        "href": "https://www.cookiesandyou.com"
       }
     })});
   </script>
@@ -331,7 +328,7 @@
 
 
 
-  <title>Terms | </title>
+  <title>Tidyverse | </title>
 
 </head>
 
@@ -555,8 +552,6 @@
 </nav>
 
 
-  <article class="article">
-
   
 
 
@@ -574,87 +569,41 @@
 
   
   
-  
-<div class="article-container pt-3">
-  <h1>Terms</h1>
-
-  
-
   
     
-
-
-<div class="article-metadata">
+  
+<div class="universal-wrapper pt-3">
+  <h1>Tidyverse</h1>
 
   
-  
-
-  
-
-  
-
-  
-
-  
-  
-  
-
-  
-  
-
-</div>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   
 </div>
 
 
 
-  <div class="article-container">
+<div class="universal-wrapper">
+  
 
-    <div class="article-style">
-      <p>&hellip;</p>
-
+  
+  
+    
+    
+    
+    <div>
+      <h2><a href="/code/type-convert/" >Type Convert</a></h2>
+      <div class="article-style">
+        
+          Never noticed type_convert from readr that lets you wrangle data and then convert as appropriate. Let&rsquo;s give it a spin.
+library(tidyverse) typical_data &lt;- tribble(~bad_col, &quot;3_apple&quot;, &quot;4_banana&quot;) typical_data %&gt;% separate(bad_col, into = c(&quot;n&quot;, &quot;fruit&quot;), sep = &quot;_&quot;) %&gt;% type_convert()  ## # A tibble: 2 x 2 ## n fruit ## &lt;dbl&gt; &lt;chr&gt; ## 1 3 apple ## 2 4 banana  Perfect!
+        
+      </div>
     </div>
+  
 
-    
+  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-</article>
+</div>
 
       
 
@@ -771,16 +720,6 @@
   
   <div class="container">
     <footer class="site-footer">
-  
-  <p class="powered-by">
-    
-      <a href="/privacy/">Privacy Policy</a>
-    
-    
-       &middot; 
-      <a href="/terms/">Terms</a>
-    
-  </p>
   
 
   <p class="powered-by">

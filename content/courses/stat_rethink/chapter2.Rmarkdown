@@ -10,6 +10,7 @@ title: Chapter 2
 toc: true
 type: docs
 weight: 1
+editable: false
 ---
 ## Building up Bayesian Inference
 

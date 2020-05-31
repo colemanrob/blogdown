@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Chapter 2 &amp; 3 Bayesian Inference  small world (the model) vs large world (reality) - goal of science is to help us move between bayesian inference is counting and comparing possibilities, the garden of forking data globe tossing example.">
+  <meta name="description" content="Never noticed type_convert from readr that lets you wrangle data and then convert as appropriate. Let&rsquo;s give it a spin.
+library(tidyverse) typical_data &lt;- tribble(~bad_col, &quot;3_apple&quot;, &quot;4_banana&quot;) typical_data %&gt;% separate(bad_col, into = c(&quot;n&quot;, &quot;fruit&quot;), sep = &quot;_&quot;) %&gt;% type_convert()  ## # A tibble: 2 x 2 ## n fruit ## &lt;dbl&gt; &lt;chr&gt; ## 1 3 apple ## 2 4 banana  Perfect!">
 
   
-  <link rel="alternate" hreflang="en-us" href="/code/statistical-rethinking-week-2/">
+  <link rel="alternate" hreflang="en-us" href="/code/type-convert/">
 
   
 
@@ -38,7 +39,7 @@
   
   
   
-  <meta name="theme-color" content="#4caf50">
+  <meta name="theme-color" content="#00a5e0">
   
 
   
@@ -255,7 +256,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/code/statistical-rethinking-week-2/">
+  <link rel="canonical" href="/code/type-convert/">
 
   
   
@@ -274,15 +275,16 @@
   <meta property="twitter:creator" content="@coleman">
   
   <meta property="og:site_name" content="">
-  <meta property="og:url" content="/code/statistical-rethinking-week-2/">
-  <meta property="og:title" content="Statistical Rethinking Week 2 | ">
-  <meta property="og:description" content="Chapter 2 &amp; 3 Bayesian Inference  small world (the model) vs large world (reality) - goal of science is to help us move between bayesian inference is counting and comparing possibilities, the garden of forking data globe tossing example."><meta property="og:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/code/type-convert/">
+  <meta property="og:title" content="Type Convert | ">
+  <meta property="og:description" content="Never noticed type_convert from readr that lets you wrangle data and then convert as appropriate. Let&rsquo;s give it a spin.
+library(tidyverse) typical_data &lt;- tribble(~bad_col, &quot;3_apple&quot;, &quot;4_banana&quot;) typical_data %&gt;% separate(bad_col, into = c(&quot;n&quot;, &quot;fruit&quot;), sep = &quot;_&quot;) %&gt;% type_convert()  ## # A tibble: 2 x 2 ## n fruit ## &lt;dbl&gt; &lt;chr&gt; ## 1 3 apple ## 2 4 banana  Perfect!"><meta property="og:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-05-18T00:00:00&#43;00:00">
+      <meta property="article:published_time" content="2020-05-31T00:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2020-05-18T11:32:45-04:00">
+    <meta property="article:modified_time" content="2020-05-31T00:00:00&#43;00:00">
   
 
   
@@ -305,12 +307,12 @@
     window.cookieconsent.initialise({
       "palette": {
         "popup": {
-          "background": "#4caf50",
+          "background": "#00a5e0",
           "text": "#fff"
         },
         "button": {
           "background": "#fff",
-          "text": "#4caf50"
+          "text": "#00a5e0"
         }
       },
       "theme": "classic",
@@ -318,7 +320,7 @@
         "message": "This website uses cookies to ensure you get the best experience on our website.",
         "dismiss": "Got it!",
         "link": "Learn more",
-        "href": "/privacy/"
+        "href": "https://www.cookiesandyou.com"
       }
     })});
   </script>
@@ -331,7 +333,7 @@
 
 
 
-  <title>Statistical Rethinking Week 2 | </title>
+  <title>Type Convert | </title>
 
 </head>
 
@@ -576,7 +578,7 @@
   
   
 <div class="article-container pt-3">
-  <h1>Statistical Rethinking Week 2</h1>
+  <h1>Type Convert</h1>
 
   
 
@@ -594,10 +596,8 @@
     
     
       
-          Last updated on
-      
     
-    May 18, 2020
+    May 31, 2020
   </span>
   
 
@@ -637,35 +637,24 @@
   <div class="article-container">
 
     <div class="article-style">
-      
+      <p>Never noticed <code>type_convert</code> from <code>readr</code> that lets you wrangle data and then convert as appropriate.  Let&rsquo;s give it a spin.</p>
+<pre><code class="language-r">library(tidyverse)
 
+typical_data &lt;- tribble(~bad_col,
+                        &quot;3_apple&quot;,
+                        &quot;4_banana&quot;)
 
-<div id="chapter-2-3-bayesian-inference" class="section level3">
-<h3>Chapter 2 &amp; 3 Bayesian Inference</h3>
-<ul>
-<li><em>small</em> world (the model) vs <em>large</em> world (reality) - goal of science is to help us move between</li>
-<li>bayesian inference is counting and comparing possibilities, the garden of forking data</li>
-<li>globe tossing example. Variables:
-<ul>
-<li>9 tosses - n = 9</li>
-<li>W water x 6</li>
-<li>L land x 3</li>
-<li><em>p</em> proportion of globe covered by water - parameters (unobserved variables)</li>
-</ul></li>
-</ul>
-<p>
-<p><strong>Likelihood</strong></p>
-<ul>
-<li>the number of ways the data are possible after eliminating the ways that are inconsistent with out data (i.e. counting the garden)</li>
-</ul>
-<p>The relative number of ways of getting 6 water, holding <em>p</em> at 0.5, and <em>N = L+W</em> at 9.</p>
-<pre class="r"><code>dbinom(6, size = 9, prob = 0.5)</code></pre>
-<pre><code>## [1] 0.1640625</code></pre>
-<p><strong>Prior</strong></p>
-<p><em>p</em> (the probability of sampling water) is the <em>parameter</em> of the model. For every parameter in your model you must provide a distribution of <em>prior plausibility</em>. Where do priors come from? Engineering choice, domain knowledge etc.</p>
-<p><strong>Posterior</strong></p>
-<p>Update the prior given the data - for every unique combination of data, likelihood, parameters and prior there is a unique <em>posterior distribution</em> – {{&lt; hl &gt;}} the relative plausibility of different parameter values conditional on the data {{&lt; /hl &gt;}} .</p>
-</div>
+typical_data %&gt;% 
+  separate(bad_col, into = c(&quot;n&quot;, &quot;fruit&quot;), sep = &quot;_&quot;) %&gt;% 
+  type_convert()
+</code></pre>
+<pre><code>## # A tibble: 2 x 2
+##       n fruit 
+##   &lt;dbl&gt; &lt;chr&gt; 
+## 1     3 apple 
+## 2     4 banana
+</code></pre>
+<p>Perfect!</p>
 
     </div>
 
@@ -677,7 +666,7 @@
 
 <div class="article-tags">
   
-  <a class="badge badge-light" href="/tag/bayes/">Bayes</a>
+  <a class="badge badge-light" href="/tag/tidyverse/">Tidyverse</a>
   
 </div>
 
@@ -694,7 +683,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=/code/statistical-rethinking-week-2/&amp;text=Statistical%20Rethinking%20Week%202" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=/code/type-convert/&amp;text=Type%20Convert" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -707,7 +696,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=/code/statistical-rethinking-week-2/&amp;t=Statistical%20Rethinking%20Week%202" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=/code/type-convert/&amp;t=Type%20Convert" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -720,7 +709,7 @@
       
       
       <li>
-        <a href="mailto:?subject=Statistical%20Rethinking%20Week%202&amp;body=/code/statistical-rethinking-week-2/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Type%20Convert&amp;body=/code/type-convert/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -733,7 +722,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=/code/statistical-rethinking-week-2/&amp;title=Statistical%20Rethinking%20Week%202" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=/code/type-convert/&amp;title=Type%20Convert" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -746,7 +735,7 @@
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Statistical%20Rethinking%20Week%202%20/code/statistical-rethinking-week-2/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Type%20Convert%20/code/type-convert/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -759,7 +748,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=/code/statistical-rethinking-week-2/&amp;title=Statistical%20Rethinking%20Week%202" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=/code/type-convert/&amp;title=Type%20Convert" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -802,7 +791,7 @@
       <div class="media-body">
         <h5 class="card-title"><a href="/">Rob Coleman</a></h5>
         <h6 class="card-subtitle">open data | rstats | coffee</h6>
-        <p class="card-text">I write about how to solve problems using <a href="https://www.r-project.org/">r</a>, an open-source programming language for data science.  Also interested in <a href="https://en.wikipedia.org/wiki/Active_labour_market_policies">active labour market</a> policy, <a href="https://en.wikipedia.org/wiki/Search_theory">search theory</a>, and jobs data.</p>
+        <p class="card-text">I make notes about how to solve problems using <a href="https://www.r-project.org/">r</a>, an open-source programming language for data science.  Also interested in <a href="https://en.wikipedia.org/wiki/Active_labour_market_policies">active labour market</a> policy, <a href="https://en.wikipedia.org/wiki/Search_theory">search</a> and <a href="https://en.wikipedia.org/wiki/Matching_theory_(economics)">matching</a> theory, and jobs data.</p>
         <ul class="network-icon" aria-hidden="true">
   
     
@@ -872,17 +861,6 @@
 
 
   
-  
-  <div class="article-widget content-widget-hr">
-    <h3>Related</h3>
-    <ul>
-      
-      <li><a href="/code/statistical-thinking-week-2/">Statistical Thinking Week 2</a></li>
-      
-      <li><a href="/code/statistical-rethinking-week-1/">Statistical Rethinking Week 1</a></li>
-      
-    </ul>
-  </div>
   
 
 
@@ -1005,16 +983,6 @@
   
   <div class="container">
     <footer class="site-footer">
-  
-  <p class="powered-by">
-    
-      <a href="/privacy/">Privacy Policy</a>
-    
-    
-       &middot; 
-      <a href="/terms/">Terms</a>
-    
-  </p>
   
 
   <p class="powered-by">

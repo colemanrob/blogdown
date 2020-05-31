@@ -27,7 +27,8 @@
   
     
   
-  <meta name="description" content="test">
+  <meta name="description" content="Sampling from the imaginary Now let&rsquo;s sample from the posterior
+p_grid &lt;- seq( from=0, to=1, length.out = 1000) prob_p &lt;- rep(1, 1000) prob_data &lt;- dbinom(6, size=9, prob= p_grid) posterior &lt;- prob_data * prob_p posterior &lt;- posterior / sum(posterior)  samples &lt;- sample(p_grid, prob = posterior, size=1e4, replace = TRUE)  plot(samples)  library(rethinking) dens(samples)  Intervals of defined boundaries # add up posterior prob where p &lt; 0.">
 
   
   <link rel="alternate" hreflang="en-us" href="/courses/stat_rethink/chapter3/">
@@ -38,7 +39,7 @@
   
   
   
-  <meta name="theme-color" content="#4caf50">
+  <meta name="theme-color" content="#00a5e0">
   
 
   
@@ -276,13 +277,14 @@
   <meta property="og:site_name" content="">
   <meta property="og:url" content="/courses/stat_rethink/chapter3/">
   <meta property="og:title" content="Chapter 3 | ">
-  <meta property="og:description" content="test"><meta property="og:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png">
+  <meta property="og:description" content="Sampling from the imaginary Now let&rsquo;s sample from the posterior
+p_grid &lt;- seq( from=0, to=1, length.out = 1000) prob_p &lt;- rep(1, 1000) prob_data &lt;- dbinom(6, size=9, prob= p_grid) posterior &lt;- prob_data * prob_p posterior &lt;- posterior / sum(posterior)  samples &lt;- sample(p_grid, prob = posterior, size=1e4, replace = TRUE)  plot(samples)  library(rethinking) dens(samples)  Intervals of defined boundaries # add up posterior prob where p &lt; 0."><meta property="og:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
       <meta property="article:published_time" content="2019-05-05T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2019-05-05T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2020-05-23T09:33:51-04:00">
   
 
   
@@ -305,12 +307,12 @@
     window.cookieconsent.initialise({
       "palette": {
         "popup": {
-          "background": "#4caf50",
+          "background": "#00a5e0",
           "text": "#fff"
         },
         "button": {
           "background": "#fff",
-          "text": "#4caf50"
+          "text": "#00a5e0"
         }
       },
       "theme": "classic",
@@ -318,7 +320,7 @@
         "message": "This website uses cookies to ensure you get the best experience on our website.",
         "dismiss": "Got it!",
         "link": "Learn more",
-        "href": "/privacy/"
+        "href": "https://www.cookiesandyou.com"
       }
     })});
   </script>
@@ -622,7 +624,13 @@
         <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
       </ul>
 
-      <nav id="TableOfContents"></nav>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#sampling-from-the-imaginary">Sampling from the imaginary</a></li>
+    <li><a href="#intervals-of-defined-boundaries">Intervals of defined boundaries</a></li>
+    <li><a href="#sampling-to-simulate-prediction">Sampling to simulate prediction</a></li>
+  </ul>
+</nav>
 
       
     </div>
@@ -636,7 +644,65 @@
           <h1>Chapter 3</h1>
 
           <div class="article-style">
-            <p>test</p>
+            <h2 id="sampling-from-the-imaginary">Sampling from the imaginary</h2>
+<p>Now let&rsquo;s sample from the posterior</p>
+<pre><code class="language-r">p_grid &lt;- seq( from=0, to=1, length.out = 1000)
+
+prob_p &lt;- rep(1, 1000)
+
+prob_data &lt;- dbinom(6, size=9, prob= p_grid)
+
+posterior &lt;- prob_data * prob_p
+
+
+posterior &lt;- posterior / sum(posterior)
+</code></pre>
+<pre><code class="language-r">samples &lt;- sample(p_grid, prob = posterior, size=1e4, replace = TRUE)
+</code></pre>
+<pre><code class="language-r">plot(samples)
+</code></pre>
+<p><img src="/courses/stat_rethink/chapter3_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre><code class="language-r">library(rethinking)
+
+dens(samples)
+</code></pre>
+<p><img src="/courses/stat_rethink/chapter3_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<h2 id="intervals-of-defined-boundaries">Intervals of defined boundaries</h2>
+<pre><code class="language-r"># add up posterior prob where p &lt; 0.5
+
+sum(posterior[p_grid &lt; 0.5])
+</code></pre>
+<pre><code>## [1] 0.1718746
+</code></pre>
+<pre><code class="language-r">quantile(samples, 0.8)
+</code></pre>
+<pre><code>##       80% 
+## 0.7607608
+</code></pre>
+<pre><code class="language-r">quantile(samples, c(0.1, 0.9))
+</code></pre>
+<pre><code>##       10%       90% 
+## 0.4473473 0.8128128
+</code></pre>
+<pre><code class="language-r">PI(samples, prob = 0.5)
+</code></pre>
+<pre><code>##       25%       75% 
+## 0.5415415 0.7387387
+</code></pre>
+<h2 id="sampling-to-simulate-prediction">Sampling to simulate prediction</h2>
+<pre><code class="language-r">dbinom(0:2, size=2, prob=0.7)
+</code></pre>
+<pre><code>## [1] 0.09 0.42 0.49
+</code></pre>
+<pre><code class="language-r">rbinom(10, size = 2, prob = 0.7)
+</code></pre>
+<pre><code>##  [1] 2 1 2 2 2 1 0 2 2 2
+</code></pre>
+<pre><code class="language-r">dummy_w &lt;- rbinom(1e5, size = 9, prob = 0.7)
+
+simplehist(dummy_w, xlab=&quot;dummy water count&quot;)
+</code></pre>
+<p><img src="/courses/stat_rethink/chapter3_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 
           </div>
 
@@ -664,22 +730,9 @@
         </div>
 
         <div class="body-footer">
-          <p>Last updated on May 5, 2019</p>
+          <p>Last updated on May 23, 2020</p>
 
           
-
-
-
-
-
-  
-  
-
-<p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/courses/stat_rethink/chapter3.markdown">
-    <i class="fas fa-pen pr-2"></i>Edit this page
-  </a>
-</p>
 
 
 
@@ -691,16 +744,6 @@
       </article>
 
       <footer class="site-footer">
-  
-  <p class="powered-by">
-    
-      <a href="/privacy/">Privacy Policy</a>
-    
-    
-       &middot; 
-      <a href="/terms/">Terms</a>
-    
-  </p>
   
 
   <p class="powered-by">

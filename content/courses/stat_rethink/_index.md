@@ -12,8 +12,12 @@ title: Overview
 toc: true
 type: docs
 weight: 1
+editable: false
 ---
 
-## Overview
+Following along with Richard McElreaths Statistical Rethinking
 
-Stuff and things and links
+* [textbook](https://xcelab.net/rm/statistical-rethinking/)
+* [youtube lectures](https://www.youtube.com/watch?v=4WVelCswXo4&list=PLDcUM9US4XdNM4Edgs7weiyIguLSToZRI)
+* [tidyversion](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/)
+
