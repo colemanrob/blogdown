@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: I make notes about how to solve problems using [r](https://www.r-project.org/), an open-source programming language for data science.  Also interested in [active labour market](https://en.wikipedia.org/wiki/Active_labour_market_policies) policy, [search](https://en.wikipedia.org/wiki/Search_theory) and [matching](https://en.wikipedia.org/wiki/Matching_theory_(economics)) theory, and jobs data.
+bio: I make notes about how to solve problems using [r](https://www.r-project.org/), an open-source programming language for data science.  Also interested in [active labour market](https://en.wikipedia.org/wiki/Active_labour_market_policies) policy, search and [matching](https://en.wikipedia.org/wiki/Matching_theory_(economics)) theory, and jobs data.
 
 education:
   courses:
@@ -40,6 +40,6 @@ user_groups:
 
 ---
 
-I make notes about how to solve problems using [r](https://www.r-project.org/), an open-source programming language for data science.  Also interested in [active labour market](https://en.wikipedia.org/wiki/Active_labour_market_policies) policy, [search](https://en.wikipedia.org/wiki/Search_theory) and [matching](https://en.wikipedia.org/wiki/Matching_theory_(economics)) theory, and jobs data. 
+I make notes about how to solve problems using [r](https://www.r-project.org/), an open-source programming language for data science.  Also interested in [active labour market](https://en.wikipedia.org/wiki/Active_labour_market_policies) policy, search and [matching](https://en.wikipedia.org/wiki/Matching_theory_(economics)) theory, and jobs data. 
 
 I live in the northern part of Ontario, Canada with [this furry brown monster](https://www.instagram.com/p/BYMVFDqjQw6/).  I write these notes to learn out loud, keep a second searchable brain, and improve my thinking/writing. :books: :coffee: :bike: :computer:

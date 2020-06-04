@@ -3,12 +3,12 @@ title: Analyzing Commuting Patterns in Ontario
 author: ''
 date: '2019-03-03'
 slug: analyzing-commuting-patterns-in-ontario
-categories: [open data]
+categories: []
 tags: [Open data]
 subtitle: ''
 summary: ''
 authors: []
-lastmod: '2020-05-17T14:03:25-04:00'
+lastmod: '2019-03-03T14:03:25-04:00'
 featured: no
 image:
   caption: ''
