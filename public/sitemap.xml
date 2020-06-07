@@ -38,6 +38,16 @@
   </url>
   
   <url>
+    <loc>/notes/</loc>
+    <lastmod>2020-06-06T19:03:51-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/notes/notes-on-allocation/</loc>
+    <lastmod>2020-06-06T19:03:51-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/code/</loc>
     <lastmod>2020-05-31T00:00:00+00:00</lastmod>
   </url>
@@ -65,11 +75,6 @@
   <url>
     <loc>/tag/other/</loc>
     <lastmod>2019-10-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/notes/</loc>
-    <lastmod>2019-08-04T12:39:21-04:00</lastmod>
   </url>
   
   <url>
@@ -164,11 +169,6 @@
   
   <url>
     <loc>/publication/journal-article/</loc>
-    <lastmod>2015-09-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/author/robert-ford/</loc>
     <lastmod>2015-09-01T00:00:00+00:00</lastmod>
   </url>
   

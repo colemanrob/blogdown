@@ -5,12 +5,66 @@
     <link>/notes/</link>
       <atom:link href="/notes/index.xml" rel="self" type="application/rss+xml" />
     <description>notes</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2017 - 2020 Rob Coleman</copyright><lastBuildDate>Sun, 04 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2017 - 2020 Rob Coleman</copyright><lastBuildDate>Sat, 06 Jun 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png</url>
       <title>notes</title>
       <link>/notes/</link>
     </image>
+    
+    <item>
+      <title>Notes on Allocating Resources</title>
+      <link>/notes/notes-on-allocation/</link>
+      <pubDate>Sat, 06 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>/notes/notes-on-allocation/</guid>
+      <description>&lt;h2 id=&#34;targeting-labour-market-programmes--results-from-a-randomized-experiment&#34;&gt;Targeting labour market programmes — results from a randomized experiment&lt;/h2&gt;
+&lt;p&gt;Stefanie Behncke, Markus Frölich &amp;amp; Michael Lechner, 2009&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://link.springer.com/article/10.1007/BF03399281&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;This research&lt;/a&gt; distinguishes between two types of statisical approaches to resource allocation in 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Active_labour_market_policies&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ALMPs&lt;/a&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;targeting&lt;/em&gt; which selects for each client the program with the highest expected outcome (based in the impact effect of each type of intervention), and;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;profiling&lt;/em&gt; which based on a set of client characteristics, estimates the risk of becoming long term unemployed where those at the highest risk of being unemployed are assigned to the most intensive services&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The authors suggest that targeting is preferable to profiling when:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;there are a variety of types of programs/interventions offered, and/or;&lt;/li&gt;
+&lt;li&gt;the risk of long-term unemployed is not highly correlated with program impacts&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The authors detail the challenges of maximizing the allocation of ALMPs in practice - namely:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;moral hazard of employment agencies (&lt;em&gt;contracting challenge&lt;/em&gt;, more on this 
+&lt;a href=&#34;https://robcoleman.ca/notes/notes-on-moral-hazard/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;)
+&lt;ul&gt;
+&lt;li&gt;caseworkers have their own goals for clients (e.g. improving personal situation, long-term stability rather than rapid re-integration)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;caseworker prediction (&lt;em&gt;informational challenge&lt;/em&gt;)
+&lt;ul&gt;
+&lt;li&gt;small sample sizes to build intuition on what works (no view of the system)&lt;/li&gt;
+&lt;li&gt;no systematic evidence of outcomes/success (e.g. clients maye return but to a difference provider/caseworker)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The authors review a pilot study in Switzerland where PES caseworkers were randomized into 2 groups, one who had access to statistical targeting tools and one where no prediction support was offered.  The design was robust:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;randomization at the caseworker level&lt;/li&gt;
+&lt;li&gt;1 year study from 2005 to 2006&lt;/li&gt;
+&lt;li&gt;over 18k jobseekers in the prediction group&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The conclusions were as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the statistical predictions offered had no impact on program assignment&lt;/li&gt;
+&lt;li&gt;caseworkers made their own predictions and ignored the model&lt;/li&gt;
+&lt;li&gt;incentives are required when caseworker discretion is at odds with the model&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;evaluating-profiling-as-a-means-of-allocating-government-services&#34;&gt;Evaluating Profiling as a Means of Allocating Government Services&lt;/h2&gt;
+&lt;p&gt;Berger, Black and Smith, 2000&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://ir.lib.uwo.ca/economicsresrpt/356/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;This research&lt;/a&gt; considers how to evaluate statistical profiling methods in allocation mechanisms for government programs.&lt;/p&gt;
+&lt;p&gt;More notes to come&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Notes on Employment Barriers</title>
