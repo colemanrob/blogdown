@@ -1,0 +1,133 @@
+---
+title: Making Tables
+author: ''
+date: '2020-06-28'
+slug: making-tables
+categories: []
+tags: [Other]
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-06-28T15:48:52-04:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+I've wanted to dive into the [gt](https://gt.rstudio.com/index.html) package for making tables for awhile now.  Here is a quick example of a table using data from a tidy tuesday a few weeks back.  It seems my hugo theme is over-writing some of the table css, I'll have to check that out.
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+
+library(gt)
+```
+
+
+
+```{r, out.width="100%", echo = FALSE}
+
+```
+
+```{css, echo = FALSE}
+table>tbody>tr:nth-child(odd)>td, table>tbody>tr:nth-child(odd)>th {
+    background-color: #fff;
+}
+table > tbody > tr:hover > td,
+table > tbody > tr:hover > th {
+  background-color: #fff;
+}
+.article-style img, .article-style video {
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+}
+```
+
+Let's read in the cocktails recipie
+
+```{r warning=FALSE, message=FALSE}
+boston_cocktails <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-26/boston_cocktails.csv') %>% 
+  janitor::clean_names()
+
+```
+
+Let's make the data reasonable!
+
+```{r, warning=FALSE, message=FALSE}
+boston_tidy <- boston_cocktails %>% 
+  # fix the measurements
+  separate(measure, into = c('value', 'measurement'), sep = " ", remove = FALSE) %>% 
+  # remove values that don't have properly formed measurements crudely
+  filter(measurement == "oz") %>% 
+  # convert fractions to decimals
+  mutate(value = case_when(
+    value == "1/2" ~ ".5",
+    value == "1/3" ~ ".33",
+    value == "1/4" ~ ".25",
+    value == "3/4" ~ ".74",
+    TRUE ~ value
+  )) %>% 
+  # magic
+  type_convert() %>% 
+  # only keep realistic values
+  filter(value <= 5)
+
+boston_table <- boston_tidy%>% 
+  filter(!category %in% c('Non-alcoholic Drinks', 'Rum', 'Shooters')) %>% 
+  group_by(category, name) %>% 
+  summarize(total_ingredients = which.max(ingredient_number),
+            total_ounces = sum(value)) %>% 
+  arrange(category, desc(total_ingredients)) %>% 
+  slice_head(n = 5, order_by = total_ingredients) %>% 
+  arrange(category) %>% 
+  ungroup()
+
+
+```
+
+make the table
+
+```{r}
+
+boston_gt_table <- gt(boston_table, 
+                      rowname_col = "name",
+                      groupname_col = "category")
+
+
+boston_gt_table <- boston_gt_table %>% 
+  tab_header(
+    title = "Top cocktails by Category",
+    subtitle = "Top 5 cocktails based on number of ingredients"
+  ) %>% 
+  tab_spanner(label = "Drink Information",
+              columns = vars("total_ingredients", "total_ounces")) %>% 
+  cols_label(
+    total_ingredients = "Total Ingredients",
+    total_ounces = "Total Ounces",
+    name = "Name"
+  ) %>% 
+  summary_rows(
+    groups = TRUE,
+    columns = vars(total_ingredients, total_ounces),
+    fns = list(Total = "sum"),
+    formatter = fmt_number,
+    decimals = 2,
+    use_seps = TRUE
+  ) 
+
+boston_gt_table %>% 
+  tab_source_note(
+    source_note = md("Data comes from the [Tidy Tuesday project](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-26/readme.md)")
+  ) %>% 
+  opt_align_table_header(align = "center")
+
+
+```
+
+More to come!

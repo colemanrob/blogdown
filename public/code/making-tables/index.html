@@ -1,0 +1,1754 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Rob Coleman">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="I&rsquo;ve wanted to dive into the gt package for making tables for awhile now. Here is a quick example of a table using data from a tidy tuesday a few weeks back.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/code/making-tables/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#00a5e0">
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,700%7CInter:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-73411487-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-73411487-1', { 'anonymize_ip': true });
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/code/making-tables/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="twitter:site" content="@coleman">
+  <meta property="twitter:creator" content="@coleman">
+  
+  <meta property="og:site_name" content="">
+  <meta property="og:url" content="/code/making-tables/">
+  <meta property="og:title" content="Making Tables | ">
+  <meta property="og:description" content="I&rsquo;ve wanted to dive into the gt package for making tables for awhile now. Here is a quick example of a table using data from a tidy tuesday a few weeks back."><meta property="og:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-06-28T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-06-28T15:48:52-04:00">
+  
+
+  
+
+
+
+  
+
+
+  
+  
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.1/cookieconsent.min.js" integrity="sha256-5VhCqFam2Cn+yjw61zbBNrbHVJ6SRydPeKopYlngbiQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.1/cookieconsent.min.css" integrity="sha256-zQ0LblD/Af8vOppw18+2anxsuaz3pWYyVWi+bTvTH8Q=" crossorigin="anonymous">
+  
+  <script>
+  window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#00a5e0",
+          "text": "#fff"
+        },
+        "button": {
+          "background": "#fff",
+          "text": "#00a5e0"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more",
+        "href": "https://www.cookiesandyou.com"
+      }
+    })});
+  </script>
+
+
+
+  
+
+
+
+
+
+  <title>Making Tables | </title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#notes"><span>Notes</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#code"><span>Code</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/courses/"><span>Courses</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+            
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="https://www.goodreads.com/user/show/8183339-rob" target="_blank" rel="noopener"><span>Books</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Making Tables</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    Jun 28, 2020
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p>I&rsquo;ve wanted to dive into the 
+<a href="https://gt.rstudio.com/index.html" target="_blank" rel="noopener">gt</a> package for making tables for awhile now.  Here is a quick example of a table using data from a tidy tuesday a few weeks back.  It seems my hugo theme is over-writing some of the table css, I&rsquo;ll have to check that out.</p>
+<pre><code class="language-r">library(tidyverse)
+
+library(gt)
+</code></pre>
+<style type="text/css">
+table>tbody>tr:nth-child(odd)>td, table>tbody>tr:nth-child(odd)>th {
+    background-color: #fff;
+}
+table > tbody > tr:hover > td,
+table > tbody > tr:hover > th {
+  background-color: #fff;
+}
+.article-style img, .article-style video {
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+}
+</style>
+<p>Let&rsquo;s read in the cocktails recipie</p>
+<pre><code class="language-r">boston_cocktails &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-26/boston_cocktails.csv') %&gt;% 
+  janitor::clean_names()
+</code></pre>
+<p>Let&rsquo;s make the data reasonable!</p>
+<pre><code class="language-r">boston_tidy &lt;- boston_cocktails %&gt;% 
+  # fix the measurements
+  separate(measure, into = c('value', 'measurement'), sep = &quot; &quot;, remove = FALSE) %&gt;% 
+  # remove values that don't have properly formed measurements crudely
+  filter(measurement == &quot;oz&quot;) %&gt;% 
+  # convert fractions to decimals
+  mutate(value = case_when(
+    value == &quot;1/2&quot; ~ &quot;.5&quot;,
+    value == &quot;1/3&quot; ~ &quot;.33&quot;,
+    value == &quot;1/4&quot; ~ &quot;.25&quot;,
+    value == &quot;3/4&quot; ~ &quot;.74&quot;,
+    TRUE ~ value
+  )) %&gt;% 
+  # magic
+  type_convert() %&gt;% 
+  # only keep realistic values
+  filter(value &lt;= 5)
+
+boston_table &lt;- boston_tidy%&gt;% 
+  filter(!category %in% c('Non-alcoholic Drinks', 'Rum', 'Shooters')) %&gt;% 
+  group_by(category, name) %&gt;% 
+  summarize(total_ingredients = which.max(ingredient_number),
+            total_ounces = sum(value)) %&gt;% 
+  arrange(category, desc(total_ingredients)) %&gt;% 
+  slice_head(n = 5, order_by = total_ingredients) %&gt;% 
+  arrange(category) %&gt;% 
+  ungroup()
+</code></pre>
+<p>make the table</p>
+<pre><code class="language-r">boston_gt_table &lt;- gt(boston_table, 
+                      rowname_col = &quot;name&quot;,
+                      groupname_col = &quot;category&quot;)
+
+
+boston_gt_table &lt;- boston_gt_table %&gt;% 
+  tab_header(
+    title = &quot;Top cocktails by Category&quot;,
+    subtitle = &quot;Top 5 cocktails based on number of ingredients&quot;
+  ) %&gt;% 
+  tab_spanner(label = &quot;Drink Information&quot;,
+              columns = vars(&quot;total_ingredients&quot;, &quot;total_ounces&quot;)) %&gt;% 
+  cols_label(
+    total_ingredients = &quot;Total Ingredients&quot;,
+    total_ounces = &quot;Total Ounces&quot;,
+    name = &quot;Name&quot;
+  ) %&gt;% 
+  summary_rows(
+    groups = TRUE,
+    columns = vars(total_ingredients, total_ounces),
+    fns = list(Total = &quot;sum&quot;),
+    formatter = fmt_number,
+    decimals = 2,
+    use_seps = TRUE
+  ) 
+
+boston_gt_table %&gt;% 
+  tab_source_note(
+    source_note = md(&quot;Data comes from the [Tidy Tuesday project](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-26/readme.md)&quot;)
+  ) %&gt;% 
+  opt_align_table_header(align = &quot;center&quot;)
+</code></pre>
+<!--html_preserve--><style>html {
+<p>font-family: -apple-system, BlinkMacSystemFont, &lsquo;Segoe UI&rsquo;, Roboto, Oxygen, Ubuntu, Cantarell, &lsquo;Helvetica Neue&rsquo;, &lsquo;Fira Sans&rsquo;, &lsquo;Droid Sans&rsquo;, Arial, sans-serif;
+}</p>
+<p>#jrihnhzhfn .gt_table {
+display: table;
+border-collapse: collapse;
+margin-left: auto;
+margin-right: auto;
+color: #333333;
+font-size: 16px;
+background-color: #FFFFFF;
+width: auto;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #A8A8A8;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #A8A8A8;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+}</p>
+<p>#jrihnhzhfn .gt_heading {
+background-color: #FFFFFF;
+text-align: center;
+border-bottom-color: #FFFFFF;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}</p>
+<p>#jrihnhzhfn .gt_title {
+color: #333333;
+font-size: 125%;
+font-weight: initial;
+padding-top: 4px;
+padding-bottom: 4px;
+border-bottom-color: #FFFFFF;
+border-bottom-width: 0;
+}</p>
+<p>#jrihnhzhfn .gt_subtitle {
+color: #333333;
+font-size: 85%;
+font-weight: initial;
+padding-top: 0;
+padding-bottom: 4px;
+border-top-color: #FFFFFF;
+border-top-width: 0;
+}</p>
+<p>#jrihnhzhfn .gt_bottom_border {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}</p>
+<p>#jrihnhzhfn .gt_col_headings {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}</p>
+<p>#jrihnhzhfn .gt_col_heading {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 6px;
+padding-left: 5px;
+padding-right: 5px;
+overflow-x: hidden;
+}</p>
+<p>#jrihnhzhfn .gt_column_spanner_outer {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+padding-top: 0;
+padding-bottom: 0;
+padding-left: 4px;
+padding-right: 4px;
+}</p>
+<p>#jrihnhzhfn .gt_column_spanner_outer:first-child {
+padding-left: 0;
+}</p>
+<p>#jrihnhzhfn .gt_column_spanner_outer:last-child {
+padding-right: 0;
+}</p>
+<p>#jrihnhzhfn .gt_column_spanner {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 6px;
+overflow-x: hidden;
+display: inline-block;
+width: 100%;
+}</p>
+<p>#jrihnhzhfn .gt_group_heading {
+padding: 8px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+}</p>
+<p>#jrihnhzhfn .gt_empty_group_heading {
+padding: 0.5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: middle;
+}</p>
+<p>#jrihnhzhfn .gt_striped {
+background-color: rgba(128, 128, 128, 0.05);
+}</p>
+<p>#jrihnhzhfn .gt_from_md &gt; :first-child {
+margin-top: 0;
+}</p>
+<p>#jrihnhzhfn .gt_from_md &gt; :last-child {
+margin-bottom: 0;
+}</p>
+<p>#jrihnhzhfn .gt_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+margin: 10px;
+border-top-style: solid;
+border-top-width: 1px;
+border-top-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+overflow-x: hidden;
+}</p>
+<p>#jrihnhzhfn .gt_stub {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 12px;
+}</p>
+<p>#jrihnhzhfn .gt_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}</p>
+<p>#jrihnhzhfn .gt_first_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+}</p>
+<p>#jrihnhzhfn .gt_grand_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}</p>
+<p>#jrihnhzhfn .gt_first_grand_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: double;
+border-top-width: 6px;
+border-top-color: #D3D3D3;
+}</p>
+<p>#jrihnhzhfn .gt_table_body {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}</p>
+<p>#jrihnhzhfn .gt_footnotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}</p>
+<p>#jrihnhzhfn .gt_footnote {
+margin: 0px;
+font-size: 90%;
+padding: 4px;
+}</p>
+<p>#jrihnhzhfn .gt_sourcenotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}</p>
+<p>#jrihnhzhfn .gt_sourcenote {
+font-size: 90%;
+padding: 4px;
+}</p>
+<p>#jrihnhzhfn .gt_left {
+text-align: left;
+}</p>
+<p>#jrihnhzhfn .gt_center {
+text-align: center;
+}</p>
+<p>#jrihnhzhfn .gt_right {
+text-align: right;
+font-variant-numeric: tabular-nums;
+}</p>
+<p>#jrihnhzhfn .gt_font_normal {
+font-weight: normal;
+}</p>
+<p>#jrihnhzhfn .gt_font_bold {
+font-weight: bold;
+}</p>
+<p>#jrihnhzhfn .gt_font_italic {
+font-style: italic;
+}</p>
+<p>#jrihnhzhfn .gt_super {
+font-size: 65%;
+}</p>
+<p>#jrihnhzhfn .gt_footnote_marks {
+font-style: italic;
+font-size: 65%;
+}
+</style></p>
+<div id="jrihnhzhfn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="3" class="gt_heading gt_title gt_font_normal" style>Top cocktails by Category</th>
+    </tr>
+    <tr>
+      <th colspan="3" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>Top 5 cocktails based on number of ingredients</th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1"></th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2">
+        <span class="gt_column_spanner">Drink Information</span>
+      </th>
+    </tr>
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Total Ingredients</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Total Ounces</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr class="gt_group_heading_row">
+      <td colspan="3" class="gt_group_heading">Brandy</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Champs Elysees Cocktail</td>
+      <td class="gt_row gt_center">5</td>
+      <td class="gt_row gt_right">4.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Cherry Blossom</td>
+      <td class="gt_row gt_center">5</td>
+      <td class="gt_row gt_right">2.50</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">D'artagnan</td>
+      <td class="gt_row gt_center">5</td>
+      <td class="gt_row gt_right">6.50</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Deauville Cocktail</td>
+      <td class="gt_row gt_center">5</td>
+      <td class="gt_row gt_right">3.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Gilroy Cocktail</td>
+      <td class="gt_row gt_center">5</td>
+      <td class="gt_row gt_right">3.48</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_stub gt_right gt_summary_row gt_first_summary_row">Total</td>
+      <td class="gt_row gt_center gt_summary_row gt_first_summary_row">25.00</td>
+      <td class="gt_row gt_right gt_summary_row gt_first_summary_row">19.48</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="3" class="gt_group_heading">Cocktail Classics</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Eye-Opener</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">6.50</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Gloom Lifter</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">4.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Hyatt's Jamaican Banana</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">5.50</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">New Orleans Gin Fizz</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">6.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Prairie Oyster Cocktail</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">6.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_stub gt_right gt_summary_row gt_first_summary_row">Total</td>
+      <td class="gt_row gt_center gt_summary_row gt_first_summary_row">30.00</td>
+      <td class="gt_row gt_right gt_summary_row gt_first_summary_row">28.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="3" class="gt_group_heading">Cordials and Liqueurs</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Praire Oyster Cocktail</td>
+      <td class="gt_row gt_center">5</td>
+      <td class="gt_row gt_right">5.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Absinthe Special Cocktail</td>
+      <td class="gt_row gt_center">2</td>
+      <td class="gt_row gt_right">1.25</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Amaretto Rose</td>
+      <td class="gt_row gt_center">2</td>
+      <td class="gt_row gt_right">1.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Amaretto Sour</td>
+      <td class="gt_row gt_center">2</td>
+      <td class="gt_row gt_right">1.24</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Amber Amour</td>
+      <td class="gt_row gt_center">2</td>
+      <td class="gt_row gt_right">0.50</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_stub gt_right gt_summary_row gt_first_summary_row">Total</td>
+      <td class="gt_row gt_center gt_summary_row gt_first_summary_row">13.00</td>
+      <td class="gt_row gt_right gt_summary_row gt_first_summary_row">8.99</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="3" class="gt_group_heading">Gin</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">The Winkle</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">11.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Vow Of Silence</td>
+      <td class="gt_row gt_center">5</td>
+      <td class="gt_row gt_right">2.24</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">The Wink</td>
+      <td class="gt_row gt_center">4</td>
+      <td class="gt_row gt_right">4.50</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Water Lily</td>
+      <td class="gt_row gt_center">4</td>
+      <td class="gt_row gt_right">2.96</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Western Rose</td>
+      <td class="gt_row gt_center">4</td>
+      <td class="gt_row gt_right">3.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_stub gt_right gt_summary_row gt_first_summary_row">Total</td>
+      <td class="gt_row gt_center gt_summary_row gt_first_summary_row">23.00</td>
+      <td class="gt_row gt_right gt_summary_row gt_first_summary_row">23.70</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="3" class="gt_group_heading">Rum - Daiquiris</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Hai Karate</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">7.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Ko Adang</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">5.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Zombie</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">7.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Floridita No. 3</td>
+      <td class="gt_row gt_center">5</td>
+      <td class="gt_row gt_right">4.24</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Hush and Wonder</td>
+      <td class="gt_row gt_center">5</td>
+      <td class="gt_row gt_right">7.48</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_stub gt_right gt_summary_row gt_first_summary_row">Total</td>
+      <td class="gt_row gt_center gt_summary_row gt_first_summary_row">28.00</td>
+      <td class="gt_row gt_right gt_summary_row gt_first_summary_row">30.72</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="3" class="gt_group_heading">Tequila</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Amante Picante</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">10.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Chupa Cabra</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">5.24</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Flower Power</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">9.50</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Oldest Temptation</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">5.25</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">The Nomad South</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">5.50</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_stub gt_right gt_summary_row gt_first_summary_row">Total</td>
+      <td class="gt_row gt_center gt_summary_row gt_first_summary_row">30.00</td>
+      <td class="gt_row gt_right gt_summary_row gt_first_summary_row">35.49</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="3" class="gt_group_heading">Vodka</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Ibiza</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">5.50</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Long Island Iced Tea</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">4.20</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Purple Passion Iced Tea</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">3.24</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Sonic Blaster</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">4.50</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Thyme Collins</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">10.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_stub gt_right gt_summary_row gt_first_summary_row">Total</td>
+      <td class="gt_row gt_center gt_summary_row gt_first_summary_row">30.00</td>
+      <td class="gt_row gt_right gt_summary_row gt_first_summary_row">27.44</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="3" class="gt_group_heading">Whiskies</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Blarney Stone Cocktail</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">5.50</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">California Lemonade</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">6.25</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Carre Reprise</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">5.50</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Chi-Town Flip</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">5.47</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Double Standard Sour</td>
+      <td class="gt_row gt_center">6</td>
+      <td class="gt_row gt_right">3.73</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_stub gt_right gt_summary_row gt_first_summary_row">Total</td>
+      <td class="gt_row gt_center gt_summary_row gt_first_summary_row">30.00</td>
+      <td class="gt_row gt_right gt_summary_row gt_first_summary_row">26.45</td>
+    </tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="3">Data comes from the <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-26/readme.md">Tidy Tuesday project</a></td>
+    </tr>
+  </tfoot>
+</table></div><!--/html_preserve-->
+<p>More to come!</p>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/other/">Other</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/code/making-tables/&amp;text=Making%20Tables" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/code/making-tables/&amp;t=Making%20Tables" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Making%20Tables&amp;body=/code/making-tables/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/code/making-tables/&amp;title=Making%20Tables" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Making%20Tables%20/code/making-tables/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/code/making-tables/&amp;title=Making%20Tables" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/rob-coleman/avatar_hud63453db3407bbe7a80777eafcdc04a3_129303_270x270_fill_q90_lanczos_center.jpg" alt="Rob Coleman">
+      
+
+      <div class="media-body">
+        <h5 class="card-title"><a href="/">Rob Coleman</a></h5>
+        <h6 class="card-subtitle">open data | rstats | coffee</h6>
+        <p class="card-text">I make notes about how to solve problems using <a href="https://www.r-project.org/">r</a>, an open-source programming language for data science.  Also interested in <a href="https://en.wikipedia.org/wiki/Active_labour_market_policies">active labour market</a> policy, search and <a href="https://en.wikipedia.org/wiki/Matching_theory_(economics)">matching</a> theory, and jobs data.</p>
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/coleman" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/colemanrob" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:coleman.rob&#43;nospam@gmail.com" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/code/notes-on-fuzzy-matching/">Notes on fuzzy matching</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    © 2017 - 2020 Rob Coleman
+  </p>
+
+  
+  
+
+
+
+
+
+  
+  
+  
+  
+
+  
+  
+  
+    
+      
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">
+      <img src="https://search.creativecommons.org/static/img/cc_icon.svg" alt="CC icon">
+      <img src="https://search.creativecommons.org/static/img/cc-by_icon.svg" alt="CC by icon">
+      <img src="https://search.creativecommons.org/static/img/cc-nc_icon.svg" alt="CC NC icon">
+      
+        <img src="https://search.creativecommons.org/static/img/cc-nd_icon.svg" alt="CC ND icon">
+        
+      
+    </a>
+  </p>
+
+
+
+  <p class="powered-by">
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

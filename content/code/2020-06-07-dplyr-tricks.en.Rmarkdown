@@ -1,0 +1,60 @@
+---
+title: Tidyverse tricks
+author: ''
+date: '2020-06-07'
+slug: dplyr-tricks
+categories:
+tags: [Tidyverse]
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-06-07T16:11:23-04:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+The following is a list of functions that are super useful in the tidyverse that help solve a wide range of problems:
+
+* [add_count](#add_count)
+* [crossing](#crossing)
+
+
+
+
+```{r, message=FALSE}
+# Get data from tidytues
+
+library(tidyverse)
+cocktails <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-26/cocktails.csv')
+
+```
+
+
+# `add_count`
+
+adds a count based on the variable supplied.  Equivalent to group_by, summarize, ungroup.
+
+```{r}
+cocktails %>% 
+  add_count(drink) %>% 
+  filter(n >= 12) %>% 
+  knitr::kable()
+```
+
+# `crossing`
+
+generates all possible combinations of variables (like expand.grid, but returns a dataframe)
+
+```{r}
+crossing(
+  a = 1:2,
+  b = c("a", "b"),
+  c = c("x", "y")
+) %>% 
+  knitr::kable()
+```
+
