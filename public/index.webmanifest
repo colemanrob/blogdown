@@ -1,9 +1,9 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "Rob Coleman",
+  "short_name": "Rob Coleman",
   "lang": "en-us",
-  "theme_color": "#00a5e0",
-  "background_color": "#00a5e0",
+  "theme_color": "#2962ff",
+  "background_color": "#2962ff",
   "icons": [{
     "src": "/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_192x192_fill_lanczos_center_2.png",
     "sizes": "192x192",

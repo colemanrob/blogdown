@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tidyverse | </title>
+    <title>Tidyverse | Rob Coleman</title>
     <link>/tag/tidyverse/</link>
       <atom:link href="/tag/tidyverse/index.xml" rel="self" type="application/rss+xml" />
     <description>Tidyverse</description>
@@ -14,15 +14,17 @@
     
     <item>
       <title>Tidyverse tricks</title>
-      <link>/code/dplyr-tricks/</link>
+      <link>/post/dplyr-tricks/</link>
       <pubDate>Sun, 07 Jun 2020 00:00:00 +0000</pubDate>
-      <guid>/code/dplyr-tricks/</guid>
+      <guid>/post/dplyr-tricks/</guid>
       <description>&lt;p&gt;The following is a list of functions that are super useful in the tidyverse that help solve a wide range of problems:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;a href=&#34;#add_count&#34;&gt;add_count&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#crossing&#34;&gt;crossing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#across&#34;&gt;across&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Get data from tidytues
 
@@ -310,14 +312,42 @@ cocktails &amp;lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rford
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;h1 id=&#34;across&#34;&gt;&lt;code&gt;across&lt;/code&gt;&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;character_visualization &amp;lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-06-30/character_visualization.csv&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Parsed with column specification:
+## cols(
+##   issue = col_double(),
+##   costume = col_character(),
+##   character = col_character(),
+##   speech = col_double(),
+##   thought = col_double(),
+##   narrative = col_double(),
+##   depicted = col_double()
+## )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;top_speech &amp;lt;- character_visualization %&amp;gt;% 
+  filter(!(character %in% c(&amp;quot;Editor narration&amp;quot;, &amp;quot;Omnipresent narration&amp;quot;))) %&amp;gt;% 
+  group_by(character) %&amp;gt;% 
+  summarize(across(speech:depicted, sum)) %&amp;gt;% 
+  slice_max(order_by = speech, n = 15) %&amp;gt;% 
+  separate(character, into = c(&amp;quot;hero&amp;quot;, &amp;quot;real_name&amp;quot;), sep = &amp;quot; = &amp;quot;) %&amp;gt;% 
+  mutate(pct_speech = speech/sum(speech)) %&amp;gt;% 
+  arrange(desc(pct_speech)) %&amp;gt;% 
+  select(-real_name) %&amp;gt;% 
+  select(hero, pct_speech, everything()) %&amp;gt;% 
+  mutate(pct_speech = round(pct_speech, 3))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `summarise()` ungrouping output (override with `.groups` argument)
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
     <item>
       <title>Type Convert</title>
-      <link>/code/type-convert/</link>
+      <link>/post/type-convert/</link>
       <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
-      <guid>/code/type-convert/</guid>
+      <guid>/post/type-convert/</guid>
       <description>&lt;p&gt;Never noticed &lt;code&gt;type_convert&lt;/code&gt; from &lt;code&gt;readr&lt;/code&gt; that lets you wrangle data and then convert as appropriate.  Let&amp;rsquo;s give it a spin.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(tidyverse)
 

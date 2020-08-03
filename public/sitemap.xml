@@ -23,11 +23,6 @@
   </url>
   
   <url>
-    <loc>/</loc>
-    <lastmod>2030-06-01T13:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/talk/example/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url>
@@ -38,22 +33,32 @@
   </url>
   
   <url>
-    <loc>/code/</loc>
-    <lastmod>2020-06-28T15:48:52-04:00</lastmod>
+    <loc>/</loc>
+    <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/code/making-tables/</loc>
-    <lastmod>2020-06-28T15:48:52-04:00</lastmod>
+    <loc>/post/making-tables-again/</loc>
+    <lastmod>2020-07-05T17:02:19-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2020-07-05T17:02:19-04:00</lastmod>
   </url>
   
   <url>
     <loc>/tag/other/</loc>
-    <lastmod>2020-06-28T15:48:52-04:00</lastmod>
+    <lastmod>2020-07-05T17:02:19-04:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/</loc>
+    <lastmod>2020-07-05T17:02:19-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/making-tables/</loc>
     <lastmod>2020-06-28T15:48:52-04:00</lastmod>
   </url>
   
@@ -63,32 +68,27 @@
   </url>
   
   <url>
-    <loc>/code/dplyr-tricks/</loc>
+    <loc>/post/dplyr-tricks/</loc>
     <lastmod>2020-06-07T16:11:23-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/notes/</loc>
+    <loc>/post/notes-on-allocation/</loc>
     <lastmod>2020-06-06T19:03:51-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/notes/notes-on-allocation/</loc>
-    <lastmod>2020-06-06T19:03:51-04:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/code/type-convert/</loc>
+    <loc>/post/type-convert/</loc>
     <lastmod>2020-05-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/code/notes-on-fuzzy-matching/</loc>
+    <loc>/post/notes-on-fuzzy-matching/</loc>
     <lastmod>2019-10-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/notes/notes-on-employment-barriers/</loc>
+    <loc>/post/notes-on-employment-barriers/</loc>
     <lastmod>2019-08-04T12:39:21-04:00</lastmod>
   </url>
   
@@ -133,7 +133,7 @@
   </url>
   
   <url>
-    <loc>/code/analyzing-commuting-patterns-in-ontario/</loc>
+    <loc>/post/analyzing-commuting-patterns-in-ontario/</loc>
     <lastmod>2019-03-03T14:03:25-04:00</lastmod>
   </url>
   
@@ -153,22 +153,22 @@
   </url>
   
   <url>
-    <loc>/notes/notes-on-moral-hazard/</loc>
+    <loc>/post/notes-on-moral-hazard/</loc>
     <lastmod>2019-01-06T12:42:59-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/notes/notes-on-outcomes-in-labour-market-programs/</loc>
+    <loc>/post/notes-on-outcomes-in-labour-market-programs/</loc>
     <lastmod>2019-01-01T13:14:14-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/notes/notes-on-incentives-in-labour-market-programs/</loc>
+    <loc>/post/notes-on-incentives-in-labour-market-programs/</loc>
     <lastmod>2018-11-25T13:15:56-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/code/scraping-restaurant-inspection-reports/</loc>
+    <loc>/post/scraping-restaurant-inspection-reports/</loc>
     <lastmod>2017-12-05T14:02:05-04:00</lastmod>
   </url>
   

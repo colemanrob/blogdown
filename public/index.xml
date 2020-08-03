@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title></title>
+    <title>Rob Coleman</title>
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    <description></description>
+    <description>Rob Coleman</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2017 - 2020 Rob Coleman</copyright><lastBuildDate>Sat, 01 Jun 2030 13:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png</url>
-      <title></title>
+      <title>Rob Coleman</title>
       <link>/</link>
     </image>
     
@@ -247,10 +247,116 @@ simplehist(dummy_w, xlab=&amp;quot;dummy water count&amp;quot;)
     </item>
     
     <item>
+      <title>Making Tables Again</title>
+      <link>/post/making-tables-again/</link>
+      <pubDate>Sun, 05 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>/post/making-tables-again/</guid>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/core-js/shim.min.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/react/react.min.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/react/react-dom.min.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/reactwidget/react-tools.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/reactable-binding/reactable.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Previously I took a look at the &lt;code&gt;gt&lt;/code&gt; package. Now I’m seeing what I can make of &lt;code&gt;reactables&lt;/code&gt; another interesting way to generate html tables. I’ll be using the latest tidytues dataset on x-men!&lt;/p&gt;
+&lt;p&gt;Load in the data&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;character_visualization &amp;lt;- readr::read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-06-30/character_visualization.csv&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Make a table. I’ll note I’m not digging too deep into the x-men content here; I’m just looking for an easy table structure.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;top_speech &amp;lt;- character_visualization %&amp;gt;% 
+  filter(!(character %in% c(&amp;quot;Editor narration&amp;quot;, &amp;quot;Omnipresent narration&amp;quot;))) %&amp;gt;% 
+  group_by(character) %&amp;gt;% 
+  summarize(across(speech:depicted, sum)) %&amp;gt;% 
+  slice_max(order_by = speech, n = 15) %&amp;gt;% 
+  separate(character, into = c(&amp;quot;hero&amp;quot;, &amp;quot;real_name&amp;quot;), sep = &amp;quot; = &amp;quot;) %&amp;gt;% 
+  mutate(pct_speech = speech/sum(speech)) %&amp;gt;% 
+  arrange(desc(pct_speech)) %&amp;gt;% 
+  select(-real_name) %&amp;gt;% 
+  select(hero, pct_speech, everything()) %&amp;gt;% 
+  mutate(pct_speech = round(pct_speech, 3))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I added this css after the fact.&lt;/p&gt;
+&lt;pre class=&#34;css&#34;&gt;&lt;code&gt;
+.x-men {
+  margin: 0 auto;
+  width: 750px;
+  font-family: Karla, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;style type=&#34;text/css&#34;&gt;
+
+.x-men {
+  margin: 0 auto;
+  width: 750px;
+  font-family: Karla, &#34;Helvetica Neue&#34;, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+&lt;/style&gt;
+&lt;p&gt;Render the table&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(reactable)
+library(htmltools)
+
+
+# Render a bar chart with a label on the left
+bar_chart &amp;lt;- function(label, 
+                      width = &amp;quot;100%&amp;quot;, 
+                      height = &amp;quot;14px&amp;quot;, 
+                      fill = &amp;quot;#00bfc4&amp;quot;, 
+                      background = NULL) {
+  bar &amp;lt;- div(style = list(background = fill, width = width, height = height))
+  chart &amp;lt;- div(style = list(flexGrow = 1, marginLeft = &amp;quot;6px&amp;quot;, background = background), bar)
+  div(style = list(display = &amp;quot;flex&amp;quot;, alignItems = &amp;quot;center&amp;quot;), label, chart)
+}
+
+col_groups = c(&amp;quot;speech&amp;quot;, &amp;quot;thought&amp;quot;, &amp;quot;narrative&amp;quot;, &amp;quot;depicted&amp;quot;)
+
+reactable(top_speech,
+          compact = TRUE,
+          class = &amp;quot;x-men&amp;quot;,
+          defaultSorted = &amp;quot;pct_speech&amp;quot;,
+          highlight = TRUE,
+          defaultColDef = colDef(headerClass = &amp;quot;header&amp;quot;, align = &amp;quot;left&amp;quot;),
+          columnGroups = list(
+            colGroup(name = &amp;quot;Representation Type&amp;quot;, columns = col_groups)
+          ),
+          columns = list(
+            hero = colDef(name = &amp;quot;X-Men Hero&amp;quot;,
+                        minWidth = 170,
+                        style = list(fontWeight = 500)),
+            speech = colDef(name = &amp;quot;Speech&amp;quot;,
+                            format = colFormat(separators = TRUE)),
+            thought = colDef(name = &amp;quot;Thought&amp;quot;,
+                             format = colFormat(separators = TRUE)),
+            narrative = colDef(name = &amp;quot;Narrative&amp;quot;,
+                               format = colFormat(separators = TRUE)),
+            depicted = colDef(name = &amp;quot;Depicted&amp;quot;,
+                              format = colFormat(separators = TRUE)),
+            pct_speech = colDef(
+              name = &amp;quot;Proportion of Speech&amp;quot;,
+              minWidth = 150,
+              defaultSortOrder = &amp;quot;desc&amp;quot;,
+              cell = function(value) {
+              value &amp;lt;- paste0(format(value * 100, nsmall = 1), &amp;quot;%&amp;quot;)
+              value &amp;lt;- format(value, width = 5, justify = &amp;quot;right&amp;quot;)
+              bar_chart(value, width = value, fill = &amp;quot;#fc5185&amp;quot;, background = &amp;quot;#e1e1e1&amp;quot;)
+            },
+            align = &amp;quot;left&amp;quot;,
+            style = list(fontFamily = &amp;quot;monospace&amp;quot;, whiteSpace = &amp;quot;pre&amp;quot;)
+          )))&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-1&#34; class=&#34;reactable html-widget&#34; style=&#34;width:auto;height:auto;&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;tag&#34;:{&#34;name&#34;:&#34;Reactable&#34;,&#34;attribs&#34;:{&#34;data&#34;:{&#34;hero&#34;:[&#34;Wolverine&#34;,&#34;Storm&#34;,&#34;Cyclops&#34;,&#34;Colossus&#34;,&#34;Rogue&#34;,&#34;Ariel/Sprite/Shadowcat&#34;,&#34;Nightcrawler&#34;,&#34;Psylocke&#34;,&#34;Professor X&#34;,&#34;Marvel Girl/Phoenix&#34;,&#34;Havok&#34;,&#34;Dazzler&#34;,&#34;Forge&#34;,&#34;Magneto&#34;,&#34;Phoenix(2)&#34;],&#34;pct_speech&#34;:[0.157,0.152,0.089,0.078,0.078,0.073,0.064,0.05,0.049,0.041,0.039,0.038,0.035,0.028,0.028],&#34;speech&#34;:[3640,3517,2052,1800,1800,1690,1492,1163,1128,957,902,875,818,651,651],&#34;thought&#34;:[532,1900,729,461,611,737,441,159,269,195,238,565,131,74,469],&#34;narrative&#34;:[352,99,193,6,49,66,6,109,175,2,172,5,118,176,40],&#34;depicted&#34;:[3537,4169,2223,2712,1603,1714,1839,993,1095,1012,779,896,588,552,680]},&#34;columns&#34;:[{&#34;accessor&#34;:&#34;hero&#34;,&#34;name&#34;:&#34;X-Men Hero&#34;,&#34;type&#34;:&#34;character&#34;,&#34;align&#34;:&#34;left&#34;,&#34;headerClassName&#34;:&#34;header&#34;,&#34;minWidth&#34;:170,&#34;style&#34;:{&#34;fontWeight&#34;:500}},{&#34;accessor&#34;:&#34;pct_speech&#34;,&#34;name&#34;:&#34;Proportion of Speech&#34;,&#34;type&#34;:&#34;numeric&#34;,&#34;align&#34;:&#34;left&#34;,&#34;headerClassName&#34;:&#34;header&#34;,&#34;defaultSortDesc&#34;:true,&#34;cell&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34;15.7%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34;15.7%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34;15.2%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34;15.2%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 8.9%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 8.9%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 7.8%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 7.8%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 7.8%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 7.8%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 7.3%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 7.3%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 6.4%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 6.4%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 5.0%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 5.0%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 4.9%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 4.9%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 4.1%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 4.1%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 3.9%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 3.9%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 3.8%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 3.8%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 3.5%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 3.5%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 2.8%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 2.8%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]},{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;display&#34;:&#34;flex&#34;,&#34;alignItems&#34;:&#34;center&#34;}},&#34;children&#34;:[&#34; 2.8%&#34;,{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;flexGrow&#34;:1,&#34;marginLeft&#34;:&#34;6px&#34;,&#34;background&#34;:&#34;#e1e1e1&#34;}},&#34;children&#34;:[{&#34;name&#34;:&#34;div&#34;,&#34;attribs&#34;:{&#34;style&#34;:{&#34;background&#34;:&#34;#fc5185&#34;,&#34;width&#34;:&#34; 2.8%&#34;,&#34;height&#34;:&#34;14px&#34;}},&#34;children&#34;:[]}]}]}],&#34;minWidth&#34;:150,&#34;style&#34;:{&#34;fontFamily&#34;:&#34;monospace&#34;,&#34;whiteSpace&#34;:&#34;pre&#34;}},{&#34;accessor&#34;:&#34;speech&#34;,&#34;name&#34;:&#34;Speech&#34;,&#34;type&#34;:&#34;numeric&#34;,&#34;align&#34;:&#34;left&#34;,&#34;headerClassName&#34;:&#34;header&#34;,&#34;format&#34;:{&#34;cell&#34;:{&#34;separators&#34;:true},&#34;aggregated&#34;:{&#34;separators&#34;:true}}},{&#34;accessor&#34;:&#34;thought&#34;,&#34;name&#34;:&#34;Thought&#34;,&#34;type&#34;:&#34;numeric&#34;,&#34;align&#34;:&#34;left&#34;,&#34;headerClassName&#34;:&#34;header&#34;,&#34;format&#34;:{&#34;cell&#34;:{&#34;separators&#34;:true},&#34;aggregated&#34;:{&#34;separators&#34;:true}}},{&#34;accessor&#34;:&#34;narrative&#34;,&#34;name&#34;:&#34;Narrative&#34;,&#34;type&#34;:&#34;numeric&#34;,&#34;align&#34;:&#34;left&#34;,&#34;headerClassName&#34;:&#34;header&#34;,&#34;format&#34;:{&#34;cell&#34;:{&#34;separators&#34;:true},&#34;aggregated&#34;:{&#34;separators&#34;:true}}},{&#34;accessor&#34;:&#34;depicted&#34;,&#34;name&#34;:&#34;Depicted&#34;,&#34;type&#34;:&#34;numeric&#34;,&#34;align&#34;:&#34;left&#34;,&#34;headerClassName&#34;:&#34;header&#34;,&#34;format&#34;:{&#34;cell&#34;:{&#34;separators&#34;:true},&#34;aggregated&#34;:{&#34;separators&#34;:true}}}],&#34;columnGroups&#34;:[{&#34;name&#34;:&#34;Representation Type&#34;,&#34;columns&#34;:[&#34;speech&#34;,&#34;thought&#34;,&#34;narrative&#34;,&#34;depicted&#34;]}],&#34;defaultSorted&#34;:[{&#34;id&#34;:&#34;pct_speech&#34;,&#34;desc&#34;:true}],&#34;defaultPageSize&#34;:10,&#34;paginationType&#34;:&#34;numbers&#34;,&#34;showPageInfo&#34;:true,&#34;minRows&#34;:1,&#34;highlight&#34;:true,&#34;compact&#34;:true,&#34;className&#34;:&#34;x-men&#34;,&#34;dataKey&#34;:&#34;768eefd78e4edb491da5b639010dafbb&#34;},&#34;children&#34;:[]},&#34;class&#34;:&#34;reactR_markup&#34;},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;It’s super buggy using &lt;code&gt;blogdown&lt;/code&gt;. At first I couldn’t render the table using a .Rmarkdown file. Once I switched to an .Rmd it seemed to work. Seems like a great table making library.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Making Tables</title>
-      <link>/code/making-tables/</link>
+      <link>/post/making-tables/</link>
       <pubDate>Sun, 28 Jun 2020 00:00:00 +0000</pubDate>
-      <guid>/code/making-tables/</guid>
+      <guid>/post/making-tables/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve wanted to dive into the 
 &lt;a href=&#34;https://gt.rstudio.com/index.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;gt&lt;/a&gt; package for making tables for awhile now.  Here is a quick example of a table using data from a tidy tuesday a few weeks back.  It seems my hugo theme is over-writing some of the table css, I&amp;rsquo;ll have to check that out.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(tidyverse)
@@ -938,15 +1044,17 @@ font-size: 65%;
     
     <item>
       <title>Tidyverse tricks</title>
-      <link>/code/dplyr-tricks/</link>
+      <link>/post/dplyr-tricks/</link>
       <pubDate>Sun, 07 Jun 2020 00:00:00 +0000</pubDate>
-      <guid>/code/dplyr-tricks/</guid>
+      <guid>/post/dplyr-tricks/</guid>
       <description>&lt;p&gt;The following is a list of functions that are super useful in the tidyverse that help solve a wide range of problems:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;a href=&#34;#add_count&#34;&gt;add_count&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#crossing&#34;&gt;crossing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#across&#34;&gt;across&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Get data from tidytues
 
@@ -1234,15 +1342,43 @@ cocktails &amp;lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rford
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;h1 id=&#34;across&#34;&gt;&lt;code&gt;across&lt;/code&gt;&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;character_visualization &amp;lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-06-30/character_visualization.csv&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Parsed with column specification:
+## cols(
+##   issue = col_double(),
+##   costume = col_character(),
+##   character = col_character(),
+##   speech = col_double(),
+##   thought = col_double(),
+##   narrative = col_double(),
+##   depicted = col_double()
+## )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;top_speech &amp;lt;- character_visualization %&amp;gt;% 
+  filter(!(character %in% c(&amp;quot;Editor narration&amp;quot;, &amp;quot;Omnipresent narration&amp;quot;))) %&amp;gt;% 
+  group_by(character) %&amp;gt;% 
+  summarize(across(speech:depicted, sum)) %&amp;gt;% 
+  slice_max(order_by = speech, n = 15) %&amp;gt;% 
+  separate(character, into = c(&amp;quot;hero&amp;quot;, &amp;quot;real_name&amp;quot;), sep = &amp;quot; = &amp;quot;) %&amp;gt;% 
+  mutate(pct_speech = speech/sum(speech)) %&amp;gt;% 
+  arrange(desc(pct_speech)) %&amp;gt;% 
+  select(-real_name) %&amp;gt;% 
+  select(hero, pct_speech, everything()) %&amp;gt;% 
+  mutate(pct_speech = round(pct_speech, 3))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `summarise()` ungrouping output (override with `.groups` argument)
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
     <item>
       <title>Notes on Allocating Resources</title>
-      <link>/notes/notes-on-allocation/</link>
+      <link>/post/notes-on-allocation/</link>
       <pubDate>Sat, 06 Jun 2020 00:00:00 +0000</pubDate>
-      <guid>/notes/notes-on-allocation/</guid>
-      <description>&lt;h2 id=&#34;targeting-labour-market-programmes--results-from-a-randomized-experiment&#34;&gt;Targeting labour market programmes — results from a randomized experiment&lt;/h2&gt;
+      <guid>/post/notes-on-allocation/</guid>
+      <description>&lt;h3 id=&#34;targeting-labour-market-programmes--results-from-a-randomized-experiment&#34;&gt;Targeting labour market programmes — results from a randomized experiment&lt;/h3&gt;
 &lt;p&gt;Stefanie Behncke, Markus Frölich &amp;amp; Michael Lechner, 2009&lt;/p&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://link.springer.com/article/10.1007/BF03399281&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;This research&lt;/a&gt; distinguishes between two types of statisical approaches to resource allocation in 
@@ -1283,7 +1419,7 @@ cocktails &amp;lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rford
 &lt;li&gt;caseworkers made their own predictions and ignored the model&lt;/li&gt;
 &lt;li&gt;incentives are required when caseworker discretion is at odds with the model&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;evaluating-profiling-as-a-means-of-allocating-government-services&#34;&gt;Evaluating Profiling as a Means of Allocating Government Services&lt;/h2&gt;
+&lt;h3 id=&#34;evaluating-profiling-as-a-means-of-allocating-government-services&#34;&gt;Evaluating Profiling as a Means of Allocating Government Services&lt;/h3&gt;
 &lt;p&gt;Berger, Black and Smith, 2000&lt;/p&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://ir.lib.uwo.ca/economicsresrpt/356/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;This research&lt;/a&gt; considers how to evaluate statistical profiling methods in allocation mechanisms for government programs.&lt;/p&gt;
@@ -1293,9 +1429,9 @@ cocktails &amp;lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rford
     
     <item>
       <title>Type Convert</title>
-      <link>/code/type-convert/</link>
+      <link>/post/type-convert/</link>
       <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
-      <guid>/code/type-convert/</guid>
+      <guid>/post/type-convert/</guid>
       <description>&lt;p&gt;Never noticed &lt;code&gt;type_convert&lt;/code&gt; from &lt;code&gt;readr&lt;/code&gt; that lets you wrangle data and then convert as appropriate.  Let&amp;rsquo;s give it a spin.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(tidyverse)
 
@@ -1319,9 +1455,9 @@ typical_data %&amp;gt;%
     
     <item>
       <title>Notes on fuzzy matching</title>
-      <link>/code/notes-on-fuzzy-matching/</link>
+      <link>/post/notes-on-fuzzy-matching/</link>
       <pubDate>Sat, 05 Oct 2019 00:00:00 +0000</pubDate>
-      <guid>/code/notes-on-fuzzy-matching/</guid>
+      <guid>/post/notes-on-fuzzy-matching/</guid>
       <description>&lt;p&gt;Recently had the pleasure of fuzzy matching two datasets that included first and last name and date of birth.  Here are some notes:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -1424,9 +1560,9 @@ library(fuzzyjoin)
     
     <item>
       <title>Notes on Employment Barriers</title>
-      <link>/notes/notes-on-employment-barriers/</link>
+      <link>/post/notes-on-employment-barriers/</link>
       <pubDate>Sun, 04 Aug 2019 00:00:00 +0000</pubDate>
-      <guid>/notes/notes-on-employment-barriers/</guid>
+      <guid>/post/notes-on-employment-barriers/</guid>
       <description>&lt;p&gt;Rodrigo Fernandezi, Herwig Immervolli, Daniele Pacificoi and Céline Thévenoti, 2016&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -1474,9 +1610,9 @@ library(fuzzyjoin)
     
     <item>
       <title>Analyzing Commuting Patterns in Ontario</title>
-      <link>/code/analyzing-commuting-patterns-in-ontario/</link>
+      <link>/post/analyzing-commuting-patterns-in-ontario/</link>
       <pubDate>Sun, 03 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>/code/analyzing-commuting-patterns-in-ontario/</guid>
+      <guid>/post/analyzing-commuting-patterns-in-ontario/</guid>
       <description>&lt;p&gt;I was inspired by 
 &lt;a href=&#34;http://varianceexplained.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;David Robinson&lt;/a&gt;&amp;lsquo;s latest webcast in which he made a heatmap of French train delays using &lt;code&gt;geom_tile&lt;/code&gt; and wanted to try it out for myself.&lt;/p&gt;
 &lt;center&gt;
@@ -1720,9 +1856,9 @@ Three
     
     <item>
       <title>Notes on Moral Hazard</title>
-      <link>/notes/notes-on-moral-hazard/</link>
+      <link>/post/notes-on-moral-hazard/</link>
       <pubDate>Sun, 06 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>/notes/notes-on-moral-hazard/</guid>
+      <guid>/post/notes-on-moral-hazard/</guid>
       <description>&lt;h1 id=&#34;moral-hazard-in-almps&#34;&gt;Moral hazard in ALMPs&lt;/h1&gt;
 &lt;p&gt;Bruttel, Oliver 2005&lt;/p&gt;
 &lt;ul&gt;
@@ -1869,9 +2005,9 @@ Three
     
     <item>
       <title>Notes on outcomes in labour market programs</title>
-      <link>/notes/notes-on-outcomes-in-labour-market-programs/</link>
+      <link>/post/notes-on-outcomes-in-labour-market-programs/</link>
       <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>/notes/notes-on-outcomes-in-labour-market-programs/</guid>
+      <guid>/post/notes-on-outcomes-in-labour-market-programs/</guid>
       <description>&lt;h2 id=&#34;estimating--the--impact--of--active--labour--market--programs--using-administrative--data--and--matching--methods&#34;&gt;Estimating  the  Impact  of  Active  Labour  Market  Programs  using Administrative  Data  and  Matching  Methods&lt;/h2&gt;
 &lt;p&gt;Handouyahia, 2016&lt;/p&gt;
 &lt;ul&gt;
@@ -1918,9 +2054,9 @@ Three
     
     <item>
       <title>Notes on incentives in labour market programs</title>
-      <link>/notes/notes-on-incentives-in-labour-market-programs/</link>
+      <link>/post/notes-on-incentives-in-labour-market-programs/</link>
       <pubDate>Sun, 25 Nov 2018 00:00:00 +0000</pubDate>
-      <guid>/notes/notes-on-incentives-in-labour-market-programs/</guid>
+      <guid>/post/notes-on-incentives-in-labour-market-programs/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;
 &lt;a href=&#34;https://www.oecd-ilibrary.org/employment/how-demanding-are-activation-requirements-for-jobseekers_2bdfecca-en&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this research&lt;/a&gt; evaluates the strictness of rules (eligibility criteria) that govern the receipt of benefits (first-tier/unemployment and second-tier/welfare) across OECD countries&lt;/li&gt;
@@ -1987,9 +2123,9 @@ Three
     
     <item>
       <title>Scraping Restaurant Inspection Reports</title>
-      <link>/code/scraping-restaurant-inspection-reports/</link>
+      <link>/post/scraping-restaurant-inspection-reports/</link>
       <pubDate>Tue, 05 Dec 2017 00:00:00 +0000</pubDate>
-      <guid>/code/scraping-restaurant-inspection-reports/</guid>
+      <guid>/post/scraping-restaurant-inspection-reports/</guid>
       <description>&lt;p&gt;
 &lt;a href=&#34;http://www.algomapublichealth.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Algoma Public Health&lt;/a&gt; is the public health agency in my area that inspects restaurants to ensure they are abiding by all the relevant food safety legislation. They are also nice enough to publish their 
 &lt;a href=&#34;http://www.algomapublichealth.com/inspections-environment/food-safety/restaurant-inspection-reports/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;restaurant health inspection reports&lt;/a&gt; online for anyone to review.&lt;/p&gt;

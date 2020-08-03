@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Open data | </title>
+    <title>Open data | Rob Coleman</title>
     <link>/tag/open-data/</link>
       <atom:link href="/tag/open-data/index.xml" rel="self" type="application/rss+xml" />
     <description>Open data</description>
@@ -14,9 +14,9 @@
     
     <item>
       <title>Analyzing Commuting Patterns in Ontario</title>
-      <link>/code/analyzing-commuting-patterns-in-ontario/</link>
+      <link>/post/analyzing-commuting-patterns-in-ontario/</link>
       <pubDate>Sun, 03 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>/code/analyzing-commuting-patterns-in-ontario/</guid>
+      <guid>/post/analyzing-commuting-patterns-in-ontario/</guid>
       <description>&lt;p&gt;I was inspired by 
 &lt;a href=&#34;http://varianceexplained.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;David Robinson&lt;/a&gt;&amp;lsquo;s latest webcast in which he made a heatmap of French train delays using &lt;code&gt;geom_tile&lt;/code&gt; and wanted to try it out for myself.&lt;/p&gt;
 &lt;center&gt;
@@ -126,9 +126,9 @@ ontario_commute %&amp;gt;%
     
     <item>
       <title>Scraping Restaurant Inspection Reports</title>
-      <link>/code/scraping-restaurant-inspection-reports/</link>
+      <link>/post/scraping-restaurant-inspection-reports/</link>
       <pubDate>Tue, 05 Dec 2017 00:00:00 +0000</pubDate>
-      <guid>/code/scraping-restaurant-inspection-reports/</guid>
+      <guid>/post/scraping-restaurant-inspection-reports/</guid>
       <description>&lt;p&gt;
 &lt;a href=&#34;http://www.algomapublichealth.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Algoma Public Health&lt;/a&gt; is the public health agency in my area that inspects restaurants to ensure they are abiding by all the relevant food safety legislation. They are also nice enough to publish their 
 &lt;a href=&#34;http://www.algomapublichealth.com/inspections-environment/food-safety/restaurant-inspection-reports/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;restaurant health inspection reports&lt;/a&gt; online for anyone to review.&lt;/p&gt;
