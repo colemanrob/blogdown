@@ -4,7 +4,7 @@ author: ''
 date: '2020-07-05'
 slug: making-tables-again
 categories: []
-tags: [Other]
+tags: [coding]
 subtitle: ''
 summary: ''
 authors: []

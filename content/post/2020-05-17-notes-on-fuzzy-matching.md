@@ -4,7 +4,7 @@ author: ''
 date: '2019-10-05'
 slug: notes-on-fuzzy-matching
 categories: []
-tags: [Other]
+tags: [coding]
 subtitle: ''
 summary: ''
 authors: []

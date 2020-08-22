@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tidyverse | Rob Coleman</title>
+    <title>tidyverse | Rob Coleman</title>
     <link>/tag/tidyverse/</link>
       <atom:link href="/tag/tidyverse/index.xml" rel="self" type="application/rss+xml" />
-    <description>Tidyverse</description>
+    <description>tidyverse</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2017 - 2020 Rob Coleman</copyright><lastBuildDate>Sun, 07 Jun 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hudbb411c2d94366f168d6aa78f52f5e7d_25002_512x512_fill_lanczos_center_2.png</url>
-      <title>Tidyverse</title>
+      <title>tidyverse</title>
       <link>/tag/tidyverse/</link>
     </image>
     

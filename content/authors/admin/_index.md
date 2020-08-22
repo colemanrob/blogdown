@@ -1,22 +1,22 @@
 ---
 authors:
 - admin
-bio: I make notes about how to solve problems using [r](https://www.r-project.org/), an open-source programming language for data science.  Also interested in [active labour market](https://en.wikipedia.org/wiki/Active_labour_market_policies) policy, search and [matching](https://en.wikipedia.org/wiki/Matching_theory_(economics)) theory, and jobs data.
+bio: I think about how to solve problems using [r](https://www.r-project.org/), an open-source programming language for data science.  Also interested in [active labour market](https://en.wikipedia.org/wiki/Active_labour_market_policies) policy, [matching](https://en.wikipedia.org/wiki/Matching_theory_(economics)) theory, and jobs data.
 
-education:
-  courses:
-  - course: MA Political Science
-    institution: Wifred Laurier University
-    year: 2008
-  - course: BA (Hons.) Political Science
-    institution: Laurentian University
-    year: 2006
-email: "coleman.rob+nospam@gmail.com"
-interests:
-- r programming
-- open government
-- coffee + books
-- cycling
+#education:
+#  courses:
+#  - course: MA Political Science
+#    institution: Wifred Laurier University
+#    year: 2008
+#  - course: BA (Hons.) Political Science
+#    institution: Laurentian University
+#    year: 2006
+#email: "coleman.rob+nospam@gmail.com"
+#interests:
+#- r programming
+#- open government
+#- coffee + books
+#- cycling
 organizations:
 - name: 
   url: ""
@@ -40,6 +40,11 @@ user_groups:
 
 ---
 
-I make notes about how to solve problems using [r](https://www.r-project.org/), an open-source programming language for data science.  Also interested in [active labour market](https://en.wikipedia.org/wiki/Active_labour_market_policies) policy, search and [matching](https://en.wikipedia.org/wiki/Matching_theory_(economics)) theory, and jobs data. 
+I think about how to solve problems using [r](https://www.r-project.org/), an open-source programming language for data science.  At work I think about [active labour market](https://en.wikipedia.org/wiki/Active_labour_market_policies) policy, [matching](https://en.wikipedia.org/wiki/Matching_theory_(economics)) theory, and jobs data for [#ONTatwork](https://twitter.com/ONTatwork).
 
-I live in the northern part of Ontario, Canada with [this furry brown monster](https://www.instagram.com/p/BYMVFDqjQw6/).  I write these notes to learn out loud, keep a second searchable brain, and improve my thinking/writing. :books: :coffee: :bike: :computer:
+Read more about:
+
+- How I work outloud using [#coding](https://robcoleman.ca/tag/coding) to solve interesting problems
+- Different ideas in [#labour market policy](https://robcoleman.ca/tag/labour-market-policy) that I find interesting
+- Publicly available [#open data](https://robcoleman.ca/tag/open-data) that I analyze to learn more about various topics
+

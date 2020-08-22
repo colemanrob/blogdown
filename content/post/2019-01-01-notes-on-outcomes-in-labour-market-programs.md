@@ -4,7 +4,7 @@ author: ''
 date: '2019-01-01'
 slug: notes-on-outcomes-in-labour-market-programs
 categories: []
-tags: []
+tags: [labour market policy]
 subtitle: ''
 summary: ''
 authors: []

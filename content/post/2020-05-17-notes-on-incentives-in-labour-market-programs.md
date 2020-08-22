@@ -4,7 +4,7 @@ author: ''
 date: '2018-11-25'
 slug: notes-on-incentives-in-labour-market-programs
 categories: []
-tags: []
+tags: [labour market policy]
 subtitle: ''
 summary: ''
 authors: []

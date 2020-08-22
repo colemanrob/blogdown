@@ -4,7 +4,7 @@ author: ''
 date: '2017-12-05'
 slug: scraping-restaurant-inspection-reports
 categories: []
-tags: [Open data]
+tags: [open data, coding]
 subtitle: ''
 summary: ''
 authors: []

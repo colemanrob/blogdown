@@ -4,7 +4,7 @@ author: ''
 date: '2019-08-04'
 slug: notes-on-employment-barriers
 categories: []
-tags: []
+tags: [labour market policy]
 subtitle: ''
 summary: ''
 authors: []

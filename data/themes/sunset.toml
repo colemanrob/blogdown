@@ -1,0 +1,18 @@
+# Theme metadata
+name = "sunset"
+
+# Is theme light or dark?
+light = true
+
+# Primary
+primary = "#537380"
+
+# Menu
+menu_primary = "#81a9ad"
+menu_text = "rgba(255,255,255,0.6)"
+menu_text_active = "rgba(255,255,255,1)"
+menu_title = "#fff"
+
+# Home sections
+home_section_odd = "#f5f5f5"
+home_section_even = "#f5f5f5"

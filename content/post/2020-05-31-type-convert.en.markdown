@@ -4,7 +4,7 @@ author: Rob
 date: '2020-05-31'
 slug: type-convert
 categories: []
-tags: [Tidyverse]
+tags: [coding, tidyverse]
 summary: ''
 authors: []
 external_link: ''

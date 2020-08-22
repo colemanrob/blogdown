@@ -4,7 +4,7 @@ author: ''
 date: '2020-06-07'
 slug: dplyr-tricks
 categories:
-tags: [Tidyverse]
+tags: [coding, tidyverse]
 subtitle: ''
 summary: ''
 authors: []

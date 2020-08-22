@@ -4,7 +4,7 @@ author: ''
 date: '2019-03-03'
 slug: analyzing-commuting-patterns-in-ontario
 categories: []
-tags: [Open data]
+tags: [open data, coding]
 subtitle: ''
 summary: ''
 authors: []

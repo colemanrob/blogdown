@@ -4,7 +4,7 @@ author: ''
 date: '2019-01-06'
 slug: notes-on-moral-hazard
 categories: []
-tags: []
+tags: [moral hazard, labour market policy]
 subtitle: ''
 summary: ''
 authors: []

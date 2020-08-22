@@ -4,7 +4,7 @@ author: Rob Coleman
 date: '2020-06-06'
 slug: notes-on-allocation
 categories: []
-tags: []
+tags: [labour market policy, moral hazard]
 subtitle: ''
 summary: 'Reviewing research on statistical profiling methods in labour market policy'
 toc: true
